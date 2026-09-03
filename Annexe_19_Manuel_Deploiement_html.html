@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annexe 19 – Manuel interactif de déploiement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-bottom: 3px solid #2d5016;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            color: #2d5016;
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        nav button.active {
+            background: #2d5016;
+            color: white;
+            border-color: #2d5016;
+        }
+
+        nav button:hover {
+            border-color: #2d5016;
+        }
+
+        .screen {
+            display: none;
+            background: white;
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h2 {
+            color: #2d5016;
+            font-size: 18px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            color: #2d5016;
+            font-size: 15px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 13px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        input[type="month"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2d5016;
+            box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.1);
+        }
+
+        button {
+            padding: 11px 18px;
+            border: none;
+            background: #2d5016;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1f3810;
+        }
+
+        button.secondary {
+            background: white;
+            color: #2d5016;
+            border: 1px solid #2d5016;
+        }
+
+        button.secondary:hover {
+            background: #f5f5f5;
+        }
+
+        button.danger {
+            background: #d9534f;
+        }
+
+        button.danger:hover {
+            background: #c9302c;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #2d5016;
+            margin: 0 0 8px 0;
+        }
+
+        .card p {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .alert.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .checklist-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: white;
+        }
+
+        .checklist-item h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .checklist-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .checklist-buttons button {
+            flex: 1;
+            min-width: 90px;
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+        .checklist-detail {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .checklist-detail.visible {
+            display: block;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.enplace {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.amettre {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.na {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        table th {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 12px;
+        }
+
+        table tr:hover {
+            background: #fafafa;
+        }
+
+        .bloc-section {
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            padding: 16px;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+
+        .bloc-title {
+            color: #2d5016;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .bloc-objective {
+            background: white;
+            padding: 12px;
+            border-left: 4px solid #2d5016;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .bloc-validation {
+            background: #d4edda;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 4px;
+            padding: 24px;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            width: 90%;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .roadmap-filter {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .roadmap-filter select {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .verify-point {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .verify-point-title {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .verify-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .verify-buttons button {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 12px;
+            min-width: 80px;
+        }
+
+        .verify-form {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .verify-form.visible {
+            display: block;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            header {
+                border: 1px solid #ddd;
+                margin-bottom: 12px;
+                page-break-after: avoid;
+            }
+            nav {
+                display: none;
+            }
+            button {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                flex-direction: column;
+            }
+            nav button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Annexe 19 – Manuel interactif de déploiement</h1>
+        <p>Sécurisation de la facturation des ESSMS</p>
+        <nav>
+            <button class="nav-btn active" data-screen="accueil">Accueil</button>
+            <button class="nav-btn" data-screen="prerequis">Prérequis</button>
+            <button class="nav-btn" data-screen="deploiement">Déploiement</button>
+            <button class="nav-btn" data-screen="test">Phase test</button>
+            <button class="nav-btn" data-screen="formation">Formation</button>
+            <button class="nav-btn" data-screen="feuille-route">Feuille de route</button>
+            <button class="nav-btn" data-screen="synthese">Synthèse</button>
+            <button class="nav-btn" data-screen="parametres">Paramètres</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- ACCUEIL -->
+        <div class="screen active" id="accueil">
+            <h2>Cadrage et préparation du déploiement</h2>
+            
+            <div style="background: white; padding: 16px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #ddd;">
+                <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Cet outil accompagne l'expert-comptable et la direction de l'ESSMS dans la mise en œuvre des actions retenues à l'issue du diagnostic. Il permet d'organiser progressivement le déploiement, de vérifier les prérequis, de documenter les tests réalisés, de suivre l'appropriation par les équipes et de centraliser les actions restant à mener jusqu'à la stabilisation du dispositif.</p>
+                
+                <div style="margin-top: 16px; padding: 12px; background: #f5f5f5; border-radius: 4px; font-size: 12px;">
+                    <strong style="color: #2d5016;">Étapes de déploiement :</strong><br>
+                    <span style="display: block; margin-top: 8px;"><strong>1. Préparer</strong> — Identifier les prérequis organisationnels</span>
+                    <span style="display: block;">↓</span>
+                    <span style="display: block;"><strong>2. Standardiser</strong> — Mettre en œuvre la collecte et transmission des données</span>
+                    <span style="display: block;">↓</span>
+                    <span style="display: block;"><strong>3. Sécuriser</strong> — Intégrer les contrôles avant facturation</span>
+                    <span style="display: block;">↓</span>
+                    <span style="display: block;"><strong>4. Stabiliser</strong> — Formaliser le traitement des anomalies et la clôture</span>
+                </div>
+            </div>
+
+            <form id="formAccueil" style="background: #fafafa; padding: 20px; border-radius: 4px; border: 1px solid #e0e0e0;">
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Établissement</label>
+                        <input type="text" id="etablissement" placeholder="Nom" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de sites</label>
+                        <input type="number" id="nbSites" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Personne chargée du déploiement</label>
+                        <input type="text" id="pilote" placeholder="Nom et fonction">
+                    </div>
+                    <div class="form-group">
+                        <label>Référent interne établissement</label>
+                        <input type="text" id="referent" placeholder="Nom et fonction">
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Date de démarrage prévisionnelle</label>
+                        <input type="date" id="dateDemarrage">
+                    </div>
+                    <div class="form-group">
+                        <label>Outil / logiciel actuellement utilisé</label>
+                        <input type="text" id="outilActuel" placeholder="Ex: Excel + courriels, logiciel métier, autre">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Organisation actuelle : décrivez brièvement</label>
+                    <textarea id="organisationActuelle" placeholder="Saisie des présences / Transmission / Facturation / Validation — comment c'est fait aujourd'hui ?"></textarea>
+                </div>
+
+                <button type="button" onclick="accueilApp.demarrer()">Démarrer le cadrage du déploiement</button>
+                <button type="button" class="secondary" onclick="accueilApp.chargerExemple()" style="margin-left: 12px;">Charger un exemple</button>
+            </form>
+        </div>
+
+        <!-- PRÉREQUIS -->
+        <div class="screen" id="prerequis">
+            <h2>Vérifier les prérequis organisationnels</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Avant de démarrer le déploiement, vérifiez que les éléments organisationnels de base sont en place. Pour chaque point « À mettre en place », documentez l'action à réaliser.</p>
+
+            <div id="checklistPrerequisContainer"></div>
+
+            <div id="prerequisConclusion" style="margin-top: 20px;"></div>
+
+            <div style="margin-top: 24px; padding: 16px; background: #d4edda; border-radius: 4px; color: #155724; font-size: 13px;">
+                <strong>✓ Données sauvegardées</strong> — Toutes vos réponses sont enregistrées automatiquement.
+            </div>
+        </div>
+
+        <!-- DÉPLOIEMENT -->
+        <div class="screen" id="deploiement">
+            <h2>Déployer le processus — Trois blocs successifs</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Chaque bloc doit être validé avant de passer au suivant. Vérifiez chaque point : Oui / À corriger / Non applicable. Les points « À corriger » alimentent automatiquement la feuille de route.</p>
+
+            <div id="deploymentContainer"></div>
+        </div>
+
+        <!-- PHASE TEST -->
+        <div class="screen" id="test">
+            <h2>Documentation des cycles de test</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Documentez les tests réalisés pour chaque bloc. Cela permet de tracer les ajustements et les conclusions avant validation.</p>
+
+            <div style="margin-bottom: 20px;">
+                <button type="button" onclick="phaseTestApp.ouvrirFormulaire()">+ Ajouter un cycle de test</button>
+            </div>
+
+            <div id="testCyclesContainer"></div>
+        </div>
+
+        <!-- FORMATION -->
+        <div class="screen" id="formation">
+            <h2>Formation et accompagnement des utilisateurs</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Documentez les formations et l'appropriation du processus par profil. Il ne s'agit pas d'un module de e-learning, mais de tracer le déploiement.</p>
+
+            <div style="margin-bottom: 20px;">
+                <button type="button" onclick="formationApp.ouvrirFormulaire()">+ Ajouter une formation</button>
+            </div>
+
+            <div id="formationContainer"></div>
+        </div>
+
+        <!-- FEUILLE DE ROUTE -->
+        <div class="screen" id="feuille-route">
+            <h2>Feuille de route de déploiement</h2>
+            <p style="margin-bottom: 16px; color: #666; font-size: 13px;">Agrégation automatique de toutes les actions saisies dans les modules précédents. Modifiez les statuts directement, filtrez et générez.</p>
+
+            <div class="roadmap-filter">
+                <select id="filtreEtape" onchange="feuilleRouteApp.filtrer()">
+                    <option value="">Toutes les étapes</option>
+                    <option value="Préparer">Préparer</option>
+                    <option value="Standardiser">Standardiser</option>
+                    <option value="Sécuriser">Sécuriser</option>
+                    <option value="Stabiliser">Stabiliser</option>
+                </select>
+                <select id="filtreStatut" onchange="feuilleRouteApp.filtrer()">
+                    <option value="">Tous les statuts</option>
+                    <option value="À engager">À engager</option>
+                    <option value="En cours">En cours</option>
+                    <option value="À tester">À tester</option>
+                    <option value="Validé">Validé</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 16px; display: flex; gap: 8px;">
+                <button type="button" onclick="feuilleRouteApp.genererImprimable()" class="secondary">Générer la feuille de route imprimable</button>
+                <button type="button" onclick="feuilleRouteApp.exportCSV()" class="secondary">Exporter en CSV</button>
+            </div>
+
+            <div id="feuilleRouteContainer"></div>
+        </div>
+
+        <!-- SYNTHÈSE -->
+        <div class="screen" id="synthese">
+            <h2>Synthèse du déploiement</h2>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>Prérequis validés</h3>
+                    <p id="synthPrerequisValides">0</p>
+                </div>
+                <div class="card">
+                    <h3>Blocs validés</h3>
+                    <p id="synthBlocsValides">0</p>
+                </div>
+                <div class="card">
+                    <h3>Actions ouvertes</h3>
+                    <p id="synthActionsOuvertes">0</p>
+                </div>
+                <div class="card">
+                    <h3>Formations réalisées</h3>
+                    <p id="synthFormationsRealisees">0</p>
+                </div>
+            </div>
+
+            <div id="synthResultat" style="padding: 16px; border-radius: 4px; margin: 20px 0; font-size: 14px; font-weight: 600; text-align: center;"></div>
+
+            <div style="background: #fafafa; border: 1px solid #ddd; padding: 16px; border-radius: 4px; margin: 20px 0;">
+                <h3>Observations finales</h3>
+                <div class="form-group">
+                    <label>Dernier point de revue</label>
+                    <input type="date" id="dateRevue">
+                </div>
+                <div class="form-group">
+                    <label>Observations</label>
+                    <textarea id="observationsSynth"></textarea>
+                </div>
+                <button type="button" onclick="syntheseApp.sauvegarder()">Sauvegarder</button>
+            </div>
+        </div>
+
+        <!-- PARAMÈTRES -->
+        <div class="screen" id="parametres">
+            <h2>Paramètres de l'outil</h2>
+
+            <div style="margin-bottom: 24px; padding: 16px; background: #fff3cd; border-radius: 4px;">
+                <h3 style="margin-top: 0; color: #856404;">Zone de danger</h3>
+                <p style="font-size: 12px; color: #856404; margin-bottom: 12px;">Réinitialiser complètement l'outil et supprimer toutes les données.</p>
+                <button type="button" class="danger" onclick="if(confirm('Êtes-vous sûr ? Cette action est irréversible.')) { parametresApp.reinitialiser(); }">Réinitialiser l'outil</button>
+            </div>
+
+            <div class="alert info">
+                <strong>À savoir :</strong> Toutes vos données sont stockées localement dans votre navigateur. Aucune donnée n'est envoyée à un serveur.
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PHASE TEST -->
+    <div class="modal" id="modalPhaseTest">
+        <div class="modal-content">
+            <h2 style="margin-top: 0;">Documenter un cycle de test</h2>
+            
+            <div class="form-group">
+                <label>Bloc concerné</label>
+                <select id="testBloc">
+                    <option value="A">Bloc A – Collecte et transmission</option>
+                    <option value="B">Bloc B – Contrôles avant facturation</option>
+                    <option value="C">Bloc C – Traitement des anomalies et clôture</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Période testée</label>
+                <input type="month" id="testPeriode">
+            </div>
+
+            <div class="form-group">
+                <label>Sites concernés</label>
+                <input type="text" id="testSites" placeholder="Ex: Site 1, Site 2">
+            </div>
+
+            <div class="form-group">
+                <label>Difficultés rencontrées</label>
+                <textarea id="testDifficultes" placeholder="Décrivez les problèmes rencontrés"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Ajustements réalisés</label>
+                <textarea id="testAjustements" placeholder="Quelles corrections ont été apportées ?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Conclusion</label>
+                <select id="testConclusion" onchange="phaseTestApp.afficherChampsSiNecessaire()">
+                    <option value="Nouveau test nécessaire">Nouveau test nécessaire</option>
+                    <option value="Validé">Validé</option>
+                </select>
+            </div>
+
+            <div id="testActionChamps" style="display: none; background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 16px;">
+                <p style="font-size: 12px; color: #666; margin-bottom: 12px;"><strong>Actions à mener :</strong></p>
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label>Action à réaliser</label>
+                    <input type="text" id="testAction" placeholder="Qu'est-ce qui doit être fait lors du prochain test ?">
+                </div>
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <label>Responsable</label>
+                    <input type="text" id="testActionResponsable" placeholder="Qui ?">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>Échéance</label>
+                    <input type="date" id="testActionEcheance">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="secondary" onclick="phaseTestApp.fermerFormulaire()">Annuler</button>
+                <button type="button" onclick="phaseTestApp.sauvegarderCycle()">Ajouter le cycle</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FORMATION -->
+    <div class="modal" id="modalFormation">
+        <div class="modal-content">
+            <h2 style="margin-top: 0;">Documenter une formation</h2>
+            
+            <div class="form-group">
+                <label>Profil concerné</label>
+                <select id="formProfil">
+                    <option value="Équipes de terrain">Équipes de terrain</option>
+                    <option value="Responsables de site">Responsables de site</option>
+                    <option value="Service administratif / comptable">Service administratif / comptable</option>
+                    <option value="Direction">Membre de la direction</option>
+                    <option value="Personne assurant le relais">Personne assurant le relais</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Sujet de formation</label>
+                <input type="text" id="formSujet" placeholder="Ex: Utilisation du support commun">
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="formDate">
+            </div>
+
+            <div class="form-group">
+                <label>Intervenant</label>
+                <input type="text" id="formIntervenant" placeholder="Nom">
+            </div>
+
+            <div class="form-group">
+                <label>Statut</label>
+                <select id="formStatut">
+                    <option value="À prévoir">À prévoir</option>
+                    <option value="Réalisé">Réalisé</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Observation</label>
+                <textarea id="formObservation" placeholder="Remarques optionnelles"></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="secondary" onclick="formationApp.fermerFormulaire()">Annuler</button>
+                <button type="button" onclick="formationApp.sauvegarderFormation()">Ajouter la formation</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // GESTION GLOBALE DU STOCKAGE
+        // ============================================================
+        const storage = {
+            contexte: {
+                etablissement: '',
+                nbSites: 1,
+                pilote: '',
+                referent: '',
+                dateDemarrage: '',
+                outilActuel: '',
+                organisationActuelle: ''
+            },
+            prerequis: {},
+            blocs: {
+                blocA: { status: 'À engager', verification: {} },
+                blocB: { status: 'À engager', verification: {} },
+                blocC: { status: 'À engager', verification: {} }
+            },
+            blocActions: [],
+            testCycles: [],
+            formations: [],
+            roadmapActions: [],
+            synthese: {
+                dateRevue: '',
+                observations: ''
+            }
+        };
+
+        function chargerData() {
+            const saved = localStorage.getItem('deploymentApp');
+            if (saved) {
+                try {
+                    Object.assign(storage, JSON.parse(saved));
+                } catch(e) {
+                    console.error('Erreur chargement données', e);
+                }
+            }
+        }
+
+        function sauvegarderData() {
+            localStorage.setItem('deploymentApp', JSON.stringify(storage));
+        }
+
+        chargerData();
+
+        // ============================================================
+        // ACCUEIL
+        // ============================================================
+        const accueilApp = {
+            afficher() {
+                // Restaurer les données sauvegardées dans les champs du formulaire
+                document.getElementById('etablissement').value = storage.contexte.etablissement || '';
+                document.getElementById('nbSites').value = storage.contexte.nbSites || 1;
+                document.getElementById('pilote').value = storage.contexte.pilote || '';
+                document.getElementById('referent').value = storage.contexte.referent || '';
+                document.getElementById('dateDemarrage').value = storage.contexte.dateDemarrage || '';
+                document.getElementById('outilActuel').value = storage.contexte.outilActuel || '';
+                document.getElementById('organisationActuelle').value = storage.contexte.organisationActuelle || '';
+            },
+            demarrer() {
+                storage.contexte.etablissement = document.getElementById('etablissement').value;
+                storage.contexte.nbSites = parseInt(document.getElementById('nbSites').value);
+                storage.contexte.pilote = document.getElementById('pilote').value;
+                storage.contexte.referent = document.getElementById('referent').value;
+                storage.contexte.dateDemarrage = document.getElementById('dateDemarrage').value;
+                storage.contexte.outilActuel = document.getElementById('outilActuel').value;
+                storage.contexte.organisationActuelle = document.getElementById('organisationActuelle').value;
+                sauvegarderData();
+                document.querySelector('[data-screen="prerequis"]').click();
+                prerequisApp.afficher();
+            },
+            chargerExemple() {
+                document.getElementById('etablissement').value = 'ESSMS Les Chênes';
+                document.getElementById('nbSites').value = '2';
+                document.getElementById('pilote').value = 'Marie Dupont (Expert-comptable)';
+                document.getElementById('referent').value = 'Jean Martin (Directeur)';
+                document.getElementById('dateDemarrage').value = new Date().toISOString().split('T')[0];
+                document.getElementById('outilActuel').value = 'Excel + courriels';
+                document.getElementById('organisationActuelle').value = 'Chaque site envoie ses données par courriel. L\'administrateur consolide manuellement. La facturation est préparée une fois par mois. Pas de contrôle formel avant transmission au financeur.';
+            }
+        };
+
+        // ============================================================
+        // PRÉREQUIS
+        // ============================================================
+        const prerequisApp = {
+            items: [
+                { id: 'regles_facturation', label: 'Les règles de facturation sont identifiées' },
+                { id: 'situations_particulieres', label: 'Les situations particulières (absences, admissions, sorties) sont définies' },
+                { id: 'saisie_presences', label: 'Les personnes chargées de saisir les présences sont identifiées' },
+                { id: 'transmission_resp', label: 'Un responsable de transmission est désigné' },
+                { id: 'preparation_facture', label: 'Une personne prépare la facture' },
+                { id: 'validation_facture', label: 'Une personne valide la facture' },
+                { id: 'echeances_mensuelles', label: 'Les échéances mensuelles sont fixées' },
+                { id: 'justificatifs', label: 'Les justificatifs sont accessibles et conservés' },
+                { id: 'relais_absence', label: 'Un relais est prévu en cas d\'absence' },
+                { id: 'outils_accessibles', label: 'Les outils utilisés sont connus et accessibles' }
+            ],
+            afficher() {
+                const container = document.getElementById('checklistPrerequisContainer');
+                container.innerHTML = '';
+                
+                this.items.forEach(item => {
+                    const status = storage.prerequis[item.id] || null;
+                    const detail = storage.prerequis[item.id + '_detail'] || {};
+                    
+                    const html = `
+                        <div class="checklist-item">
+                            <h4>${item.label}</h4>
+                            <div class="checklist-buttons">
+                                <button type="button" onclick="prerequisApp.setStatus('${item.id}', 'En place')" style="background: ${status === 'En place' ? '#28a745' : '#e2e3e5'}; color: white;">
+                                    En place
+                                </button>
+                                <button type="button" onclick="prerequisApp.setStatus('${item.id}', 'À mettre en place')" style="background: ${status === 'À mettre en place' ? '#ffc107' : '#e2e3e5'}; color: ${status === 'À mettre en place' ? '#333' : '#666'};">
+                                    À mettre en place
+                                </button>
+                                <button type="button" onclick="prerequisApp.setStatus('${item.id}', 'N/A')" style="background: ${status === 'N/A' ? '#6c757d' : '#e2e3e5'}; color: white;">
+                                    N/A
+                                </button>
+                            </div>
+                            ${status ? `<div style="margin-top: 8px;"><span class="status-badge ${status === 'En place' ? 'enplace' : status === 'À mettre en place' ? 'amettre' : 'na'}">${status}</span></div>` : ''}
+                            
+                            ${status === 'À mettre en place' ? `
+                                <div class="checklist-detail visible">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label style="font-size: 12px;">Action à réaliser</label>
+                                        <input type="text" value="${detail.action || ''}" onchange="prerequisApp.setDetail('${item.id}', 'action', this.value)" placeholder="Qu'est-ce qui doit être fait ?">
+                                    </div>
+                                    <div class="form-group" style="margin-top: 8px; margin-bottom: 0;">
+                                        <label style="font-size: 12px;">Responsable</label>
+                                        <input type="text" value="${detail.responsable || ''}" onchange="prerequisApp.setDetail('${item.id}', 'responsable', this.value)" placeholder="Qui ?">
+                                    </div>
+                                    <div class="form-group" style="margin-top: 8px; margin-bottom: 0;">
+                                        <label style="font-size: 12px;">Échéance</label>
+                                        <input type="date" value="${detail.echeance || ''}" onchange="prerequisApp.setDetail('${item.id}', 'echeance', this.value)">
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                    container.innerHTML += html;
+                });
+
+                this.afficherConclusion();
+            },
+            afficherConclusion() {
+                const conclusionDiv = document.getElementById('prerequisConclusion');
+                const nbRenseignes = this.items.filter(item => storage.prerequis[item.id] !== undefined && storage.prerequis[item.id] !== null).length;
+                const nbAMettre = this.items.filter(item => storage.prerequis[item.id] === 'À mettre en place').length;
+                const totalItems = this.items.length;
+                
+                if (nbRenseignes < totalItems) {
+                    conclusionDiv.innerHTML = '<div class="alert warning"><strong>⚠ Le cadrage des prérequis doit être complété.</strong></div>';
+                } else if (nbAMettre > 0) {
+                    conclusionDiv.innerHTML = `<div class="alert warning"><strong>⚠ Des points restent à traiter avant la poursuite du déploiement</strong> (${nbAMettre} point${nbAMettre > 1 ? 's' : ''})</div>`;
+                } else {
+                    conclusionDiv.innerHTML = '<div class="alert success"><strong>✓ Prérequis suffisants pour engager le déploiement</strong></div>';
+                }
+            },
+            setStatus(id, status) {
+                storage.prerequis[id] = status;
+                if (status !== 'À mettre en place') {
+                    delete storage.prerequis[id + '_detail'];
+                }
+                sauvegarderData();
+                this.afficher();
+            },
+            setDetail(id, field, value) {
+                if (!storage.prerequis[id + '_detail']) {
+                    storage.prerequis[id + '_detail'] = {};
+                }
+                storage.prerequis[id + '_detail'][field] = value;
+                sauvegarderData();
+            }
+        };
+
+        // ============================================================
+        // DÉPLOIEMENT
+        // ============================================================
+        const deploymentApp = {
+            blocs: [
+                {
+                    id: 'blocA',
+                    titre: 'BLOC A – Collecte et transmission des données',
+                    objectif: 'Organiser une production et une transmission homogènes des données de présence.',
+                    points: [
+                        'Support commun disponible',
+                        'Règles de saisie communiquées',
+                        'Codes et situations compris par les utilisateurs',
+                        'Échéance de transmission fixée',
+                        'Responsable identifié',
+                        'Premier test effectué'
+                    ],
+                    critere: 'Les données nécessaires à la facturation sont produites et transmises selon les modalités prévues, sans retraitement important par le service administratif.'
+                },
+                {
+                    id: 'blocB',
+                    titre: 'BLOC B – Contrôles avant facturation',
+                    objectif: 'Intégrer le contrôle de concordance au cycle mensuel.',
+                    points: [
+                        'Personne chargée du contrôle désignée',
+                        'Données nécessaires disponibles',
+                        'Contrôle effectué avant émission de la facture',
+                        'Anomalie détectée pouvant être retrouvée et corrigée',
+                        'Validation prévue avant transmission au financeur'
+                    ],
+                    critere: 'Le contrôle peut être réalisé avant l\'émission de la facture à partir des données disponibles, sans reconstitution importante.'
+                },
+                {
+                    id: 'blocC',
+                    titre: 'BLOC C – Traitement des anomalies et clôture',
+                    objectif: 'Formaliser le traitement des anomalies et la clôture mensuelle.',
+                    points: [
+                        'Une règle de traitement est définie',
+                        'Un responsable est identifié',
+                        'La correction est tracée',
+                        'Les éléments justificatifs sont conservés',
+                        'Les anomalies récurrentes peuvent être remontées à la direction',
+                        'La clôture mensuelle est formalisée'
+                    ],
+                    critere: 'Une anomalie détectée peut être attribuée, corrigée, documentée et clôturée selon une règle connue des personnes concernées.'
+                }
+            ],
+            afficher() {
+                const container = document.getElementById('deploymentContainer');
+                container.innerHTML = '';
+
+                this.blocs.forEach(bloc => {
+                    const data = storage.blocs[bloc.id];
+                    
+                    let pointsHtml = '';
+                    bloc.points.forEach((point, idx) => {
+                        const pointId = 'point_' + idx;
+                        const verification = data.verification[pointId] || null;
+                        
+                        pointsHtml += `
+                            <div class="verify-point">
+                                <div class="verify-point-title">${point}</div>
+                                <div class="verify-buttons">
+                                    <button type="button" onclick="deploymentApp.setPointStatus('${bloc.id}', '${pointId}', 'En place')" style="background: ${verification === 'En place' ? '#28a745' : '#e2e3e5'}; color: white; padding: 8px; font-size: 11px;">Oui</button>
+                                    <button type="button" onclick="deploymentApp.setPointStatus('${bloc.id}', '${pointId}', 'À corriger')" style="background: ${verification === 'À corriger' ? '#ffc107' : '#e2e3e5'}; color: ${verification === 'À corriger' ? '#333' : '#666'}; padding: 8px; font-size: 11px;">À corriger</button>
+                                    <button type="button" onclick="deploymentApp.setPointStatus('${bloc.id}', '${pointId}', 'N/A')" style="background: ${verification === 'N/A' ? '#6c757d' : '#e2e3e5'}; color: white; padding: 8px; font-size: 11px;">N/A</button>
+                                </div>
+                                ${verification === 'À corriger' ? `
+                                    <div class="verify-form visible">
+                                        <div class="form-group" style="margin-bottom: 8px;">
+                                            <label style="font-size: 12px;">Action à réaliser</label>
+                                            <input type="text" id="action_${bloc.id}_${pointId}" placeholder="Qu'est-ce qui doit être corrigé ?" style="font-size: 12px;" value="${deploymentApp.getActionFromStorage(bloc.id, pointId, 'action') || ''}">
+                                        </div>
+                                        <div class="form-group" style="margin-bottom: 8px;">
+                                            <label style="font-size: 12px;">Responsable</label>
+                                            <input type="text" id="responsable_${bloc.id}_${pointId}" placeholder="Qui ?" style="font-size: 12px;" value="${deploymentApp.getActionFromStorage(bloc.id, pointId, 'responsable') || ''}">
+                                        </div>
+                                        <div class="form-group" style="margin-bottom: 8px;">
+                                            <label style="font-size: 12px;">Échéance</label>
+                                            <input type="date" id="echeance_${bloc.id}_${pointId}" style="font-size: 12px;" value="${deploymentApp.getActionFromStorage(bloc.id, pointId, 'echeance') || ''}">
+                                        </div>
+                                        <div class="form-group" style="margin-bottom: 0;">
+                                            <label style="font-size: 12px;">Commentaire</label>
+                                            <textarea id="comment_${bloc.id}_${pointId}" placeholder="Notes" style="font-size: 12px; min-height: 50px;">${deploymentApp.getActionFromStorage(bloc.id, pointId, 'commentaire') || ''}</textarea>
+                                        </div>
+                                    </div>
+                                    <button type="button" style="margin-top: 8px; font-size: 11px; padding: 6px 10px;" onclick="deploymentApp.sauvegarderAction('${bloc.id}', '${pointId}')">Sauvegarder cette action</button>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+
+                    const nbPointsRenseignes = bloc.points.length;
+                    const nbPointsACorreger = Object.values(data.verification).filter(v => v === 'À corriger').length;
+                    const nbPointsRenseignesReellement = Object.keys(data.verification).length;
+
+                    const html = `
+                        <div class="bloc-section">
+                            <div class="bloc-title">${bloc.titre}</div>
+                            <div class="bloc-objective"><strong>Objectif :</strong> ${bloc.objectif}</div>
+                            
+                            <div style="margin-bottom: 16px;">
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block; font-size: 13px;">Points de vérification</label>
+                                ${pointsHtml}
+                            </div>
+
+                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 16px;">
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block; font-size: 13px;">Statut du bloc</label>
+                                <select id="status_${bloc.id}" onchange="deploymentApp.setBlocStatus('${bloc.id}', this.value)" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px;">
+                                    <option value="À engager" ${data.status === 'À engager' ? 'selected' : ''}>À engager</option>
+                                    <option value="En cours" ${data.status === 'En cours' ? 'selected' : ''}>En cours</option>
+                                    <option value="À tester" ${data.status === 'À tester' ? 'selected' : ''}>À tester</option>
+                                    <option value="Validé" ${data.status === 'Validé' ? 'selected' : ''}>Validé</option>
+                                </select>
+                            </div>
+
+                            <div class="bloc-validation">
+                                <strong>Critère de validation :</strong> ${bloc.critere}
+                            </div>
+
+                            <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button type="button" onclick="deploymentApp.validerBloc('${bloc.id}')" style="background: #28a745;">Valider l'étape</button>
+                                <button type="button" class="secondary" onclick="phaseTestApp.ouvrirFormulairePour('${bloc.id}')">Maintenir en phase test</button>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += html;
+                });
+            },
+            getActionFromStorage(blocId, pointId, field) {
+                const action = storage.blocActions.find(a => a.blocId === blocId && a.pointId === pointId);
+                return action ? action[field] : '';
+            },
+            sauvegarderAction(blocId, pointId) {
+                const action = document.getElementById(`action_${blocId}_${pointId}`)?.value || '';
+                const responsable = document.getElementById(`responsable_${blocId}_${pointId}`)?.value || '';
+                const echeance = document.getElementById(`echeance_${blocId}_${pointId}`)?.value || '';
+                const commentaire = document.getElementById(`comment_${blocId}_${pointId}`)?.value || '';
+
+                // Supprimer action existante
+                storage.blocActions = storage.blocActions.filter(a => !(a.blocId === blocId && a.pointId === pointId));
+
+                // Ajouter nouvelle action
+                if (action) {
+                    storage.blocActions.push({
+                        blocId,
+                        pointId,
+                        action,
+                        responsable,
+                        echeance,
+                        commentaire
+                    });
+                }
+
+                sauvegarderData();
+                alert('Action sauvegardée');
+            },
+            setPointStatus(blocId, pointId, status) {
+                if (!storage.blocs[blocId].verification) {
+                    storage.blocs[blocId].verification = {};
+                }
+                storage.blocs[blocId].verification[pointId] = status;
+                
+                // Si le point passe à "En place" ou "N/A", supprimer l'action
+                if (status === 'En place' || status === 'N/A') {
+                    storage.blocActions = storage.blocActions.filter(a => !(a.blocId === blocId && a.pointId === pointId));
+                }
+                
+                sauvegarderData();
+                this.afficher();
+            },
+            setBlocStatus(blocId, status) {
+                storage.blocs[blocId].status = status;
+                sauvegarderData();
+            },
+            validerBloc(blocId) {
+                const bloc = storage.blocs[blocId];
+                const pointsNonRenseignes = this.blocs.find(b => b.id === blocId).points.length - Object.keys(bloc.verification).length;
+                const pointsACorreger = Object.values(bloc.verification).filter(v => v === 'À corriger').length;
+                
+                if (pointsNonRenseignes > 0) {
+                    alert(`${pointsNonRenseignes} point(s) n\'ont pas été renseignés. Veuillez compléter la vérification avant de valider.`);
+                    return;
+                }
+
+                if (pointsACorreger > 0) {
+                    alert(`${pointsACorreger} point(s) restent à corriger. Veuillez utiliser le bouton "Maintenir en phase test" pour continuer les ajustements.`);
+                    return;
+                }
+
+                bloc.status = 'Validé';
+                sauvegarderData();
+                this.afficher();
+                alert('Bloc validé');
+            }
+        };
+
+        // ============================================================
+        // PHASE TEST
+        // ============================================================
+        const phaseTestApp = {
+            currentBlocId: null,
+            afficher() {
+                const container = document.getElementById('testCyclesContainer');
+                if (storage.testCycles.length === 0) {
+                    container.innerHTML = '<div class="alert info">Aucun cycle de test documenté pour le moment.</div>';
+                    return;
+                }
+                container.innerHTML = '';
+                storage.testCycles.forEach((cycle, idx) => {
+                    const html = `
+                        <div class="bloc-section">
+                            <div class="bloc-title">Cycle ${idx + 1} — ${cycle.bloc || 'Non spécifié'}</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                <div>
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Période</label>
+                                    <p style="font-size: 13px;">${cycle.periode || '-'}</p>
+                                </div>
+                                <div>
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Sites</label>
+                                    <p style="font-size: 13px;">${cycle.sites || '-'}</p>
+                                </div>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Difficultés</label>
+                                <p style="margin: 0; color: #666;">${cycle.difficultes || '-'}</p>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Ajustements</label>
+                                <p style="margin: 0; color: #666;">${cycle.ajustements || '-'}</p>
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Conclusion</label>
+                                <span class="status-badge ${cycle.conclusion === 'Validé' ? 'enplace' : 'amettre'}">${cycle.conclusion}</span>
+                            </div>
+                            ${cycle.conclusion === 'Nouveau test nécessaire' && cycle.action ? `
+                                <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
+                                    <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Action prévue</label>
+                                    <p style="margin: 0; color: #666;">${cycle.action}</p>
+                                </div>
+                            ` : ''}
+                            <button type="button" class="danger" onclick="phaseTestApp.supprimerCycle(${idx})" style="font-size: 12px; padding: 8px 12px;">Supprimer</button>
+                        </div>
+                    `;
+                    container.innerHTML += html;
+                });
+            },
+            ouvrirFormulaire() {
+                this.currentBlocId = null;
+                document.getElementById('testBloc').value = 'A';
+                document.getElementById('testPeriode').value = '';
+                document.getElementById('testSites').value = '';
+                document.getElementById('testDifficultes').value = '';
+                document.getElementById('testAjustements').value = '';
+                document.getElementById('testConclusion').value = 'Nouveau test nécessaire';
+                document.getElementById('testAction').value = '';
+                document.getElementById('testActionResponsable').value = '';
+                document.getElementById('testActionEcheance').value = '';
+                this.afficherChampsSiNecessaire();
+                document.getElementById('modalPhaseTest').classList.add('active');
+            },
+            ouvrirFormulairePour(blocId) {
+                this.currentBlocId = blocId;
+                const mapBlocToLetter = { blocA: 'A', blocB: 'B', blocC: 'C' };
+                document.getElementById('testBloc').value = mapBlocToLetter[blocId];
+                document.getElementById('testPeriode').value = '';
+                document.getElementById('testSites').value = '';
+                document.getElementById('testDifficultes').value = '';
+                document.getElementById('testAjustements').value = '';
+                document.getElementById('testConclusion').value = 'Nouveau test nécessaire';
+                document.getElementById('testAction').value = '';
+                document.getElementById('testActionResponsable').value = '';
+                document.getElementById('testActionEcheance').value = '';
+                this.afficherChampsSiNecessaire();
+                document.getElementById('modalPhaseTest').classList.add('active');
+            },
+            afficherChampsSiNecessaire() {
+                const conclusion = document.getElementById('testConclusion').value;
+                const champsDiv = document.getElementById('testActionChamps');
+                if (conclusion === 'Nouveau test nécessaire') {
+                    champsDiv.style.display = 'block';
+                } else {
+                    champsDiv.style.display = 'none';
+                }
+            },
+            sauvegarderCycle() {
+                const bloc = document.getElementById('testBloc').value;
+                const mapLetterToBloc = { 
+                    A: 'Bloc A – Collecte et transmission', 
+                    B: 'Bloc B – Contrôles avant facturation', 
+                    C: 'Bloc C – Traitement des anomalies' 
+                };
+                
+                const cycle = {
+                    bloc: mapLetterToBloc[bloc],
+                    periode: document.getElementById('testPeriode').value,
+                    sites: document.getElementById('testSites').value,
+                    difficultes: document.getElementById('testDifficultes').value,
+                    ajustements: document.getElementById('testAjustements').value,
+                    conclusion: document.getElementById('testConclusion').value
+                };
+
+                // Ajouter action si "Nouveau test nécessaire"
+                if (cycle.conclusion === 'Nouveau test nécessaire') {
+                    cycle.action = document.getElementById('testAction').value;
+                    cycle.actionResponsable = document.getElementById('testActionResponsable').value;
+                    cycle.actionEcheance = document.getElementById('testActionEcheance').value;
+                }
+
+                storage.testCycles.push(cycle);
+                sauvegarderData();
+                this.fermerFormulaire();
+                this.afficher();
+            },
+            fermerFormulaire() {
+                document.getElementById('modalPhaseTest').classList.remove('active');
+            },
+            supprimerCycle(idx) {
+                if (confirm('Supprimer ce cycle de test ?')) {
+                    storage.testCycles.splice(idx, 1);
+                    sauvegarderData();
+                    this.afficher();
+                }
+            }
+        };
+
+        // ============================================================
+        // FORMATION
+        // ============================================================
+        const formationApp = {
+            afficher() {
+                const container = document.getElementById('formationContainer');
+                
+                if (storage.formations.length === 0) {
+                    container.innerHTML = '<div class="alert info">Aucune formation documentée pour le moment.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                storage.formations.forEach((f, idx) => {
+                    const html = `
+                        <div class="bloc-section">
+                            <div class="bloc-title">${f.profil}</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                <div>
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Sujet</label>
+                                    <p style="font-size: 13px; margin: 0;">${f.sujet}</p>
+                                </div>
+                                <div>
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Date</label>
+                                    <p style="font-size: 13px; margin: 0;">${f.date || '-'}</p>
+                                </div>
+                                <div>
+                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Statut</label>
+                                    <span class="status-badge ${f.statut === 'Réalisé' ? 'enplace' : 'amettre'}">${f.statut}</span>
+                                </div>
+                            </div>
+                            ${f.intervenant ? `<div style="font-size: 12px; color: #666;"><strong>Intervenant :</strong> ${f.intervenant}</div>` : ''}
+                            ${f.observation ? `<div style="font-size: 12px; color: #666; margin-top: 8px;"><strong>Observation :</strong> ${f.observation}</div>` : ''}
+                            <button type="button" class="danger" onclick="formationApp.supprimerFormation(${idx})" style="margin-top: 12px; font-size: 12px; padding: 8px 12px;">Supprimer</button>
+                        </div>
+                    `;
+                    container.innerHTML += html;
+                });
+            },
+            ouvrirFormulaire() {
+                document.getElementById('formSujet').value = '';
+                document.getElementById('formDate').value = '';
+                document.getElementById('formIntervenant').value = '';
+                document.getElementById('formStatut').value = 'À prévoir';
+                document.getElementById('formObservation').value = '';
+                document.getElementById('modalFormation').classList.add('active');
+            },
+            sauvegarderFormation() {
+                const formation = {
+                    profil: document.getElementById('formProfil').value,
+                    sujet: document.getElementById('formSujet').value,
+                    date: document.getElementById('formDate').value,
+                    intervenant: document.getElementById('formIntervenant').value,
+                    statut: document.getElementById('formStatut').value,
+                    observation: document.getElementById('formObservation').value
+                };
+
+                if (!formation.sujet) {
+                    alert('Veuillez renseigner le sujet');
+                    return;
+                }
+
+                storage.formations.push(formation);
+                sauvegarderData();
+                this.fermerFormulaire();
+                this.afficher();
+            },
+            fermerFormulaire() {
+                document.getElementById('modalFormation').classList.remove('active');
+            },
+            supprimerFormation(idx) {
+                if (confirm('Supprimer cette formation ?')) {
+                    storage.formations.splice(idx, 1);
+                    sauvegarderData();
+                    this.afficher();
+                }
+            }
+        };
+
+        // ============================================================
+        // FEUILLE DE ROUTE
+        // ============================================================
+        const feuilleRouteApp = {
+            afficher() {
+                const filtreEtape = document.getElementById('filtreEtape').value;
+                const filtreStatut = document.getElementById('filtreStatut').value;
+
+                const actions = this.agregateActions();
+                
+                let filtered = actions;
+                if (filtreEtape) {
+                    filtered = filtered.filter(a => a.etape === filtreEtape);
+                }
+                if (filtreStatut) {
+                    filtered = filtered.filter(a => a.statut === filtreStatut);
+                }
+
+                const container = document.getElementById('feuilleRouteContainer');
+                
+                if (filtered.length === 0) {
+                    container.innerHTML = '<div class="alert info">Aucune action avec ces filtres.</div>';
+                    return;
+                }
+
+                let html = '<table><thead><tr><th>Étape</th><th>Action</th><th>Responsable</th><th>Échéance</th><th>Critère</th><th>Statut</th></tr></thead><tbody>';
+                
+                filtered.forEach((action) => {
+                    html += `
+                        <tr>
+                            <td>${action.etape}</td>
+                            <td>${action.action}</td>
+                            <td>${action.responsable}</td>
+                            <td>${action.echeance}</td>
+                            <td style="font-size: 11px;">${action.critere}</td>
+                            <td>
+                                <select onchange="feuilleRouteApp.changerStatut('${action.id}', this.value)" style="font-size: 11px; padding: 4px;">
+                                    <option value="À engager" ${action.statut === 'À engager' ? 'selected' : ''}>À engager</option>
+                                    <option value="En cours" ${action.statut === 'En cours' ? 'selected' : ''}>En cours</option>
+                                    <option value="À tester" ${action.statut === 'À tester' ? 'selected' : ''}>À tester</option>
+                                    <option value="Validé" ${action.statut === 'Validé' ? 'selected' : ''}>Validé</option>
+                                </select>
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table>';
+                container.innerHTML = html;
+            },
+            changerStatut(actionId, nouveauStatut) {
+                const allActions = this.agregateActions();
+                const action = allActions.find(a => a.id === actionId);
+                
+                if (action) {
+                    // Chercher ou créer l'enregistrement dans storage.roadmapActions
+                    let roadmapAction = storage.roadmapActions.find(a => a.id === actionId);
+                    
+                    if (!roadmapAction) {
+                        // Créer un nouvel enregistrement pour cette action
+                        roadmapAction = {
+                            id: actionId,
+                            etape: action.etape,
+                            action: action.action,
+                            responsable: action.responsable,
+                            echeance: action.echeance,
+                            critere: action.critere,
+                            statut: nouveauStatut
+                        };
+                        storage.roadmapActions.push(roadmapAction);
+                    } else {
+                        // Mettre à jour le statut existant
+                        roadmapAction.statut = nouveauStatut;
+                    }
+                    
+                    sauvegarderData();
+                    this.afficher();
+                }
+            },
+            agregateActions() {
+                const actions = [];
+
+                // Fonction helper pour obtenir le statut mémorisé
+                const obtenirStatut = (actionId) => {
+                    const stored = storage.roadmapActions.find(a => a.id === actionId);
+                    return stored ? stored.statut : 'À engager';
+                };
+
+                // Actions depuis les blocs de déploiement
+                storage.blocActions.forEach((blockAction, idx) => {
+                    const etapes = { blocA: 'Standardiser', blocB: 'Sécuriser', blocC: 'Stabiliser' };
+                    const criteriaMap = {
+                        blocA: 'Les données nécessaires à la facturation sont produites et transmises',
+                        blocB: 'Le contrôle peut être réalisé avant l\'émission de la facture',
+                        blocC: 'Une anomalie peut être attribuée, corrigée, documentée et clôturée'
+                    };
+
+                    const actionId = `blockAction_${blockAction.blocId}_${blockAction.pointId}`;
+                    actions.push({
+                        id: actionId,
+                        etape: etapes[blockAction.blocId],
+                        action: blockAction.action,
+                        responsable: blockAction.responsable || 'À définir',
+                        echeance: blockAction.echeance || '-',
+                        critere: criteriaMap[blockAction.blocId],
+                        statut: obtenirStatut(actionId)
+                    });
+                });
+
+                // Actions depuis les cycles de test "Nouveau test nécessaire"
+                storage.testCycles.forEach((cycle, idx) => {
+                    if (cycle.conclusion === 'Nouveau test nécessaire' && cycle.action) {
+                        const actionId = `testAction_${idx}`;
+                        actions.push({
+                            id: actionId,
+                            etape: 'À tester',
+                            action: cycle.action,
+                            responsable: cycle.actionResponsable || 'À définir',
+                            echeance: cycle.actionEcheance || '-',
+                            critere: 'Cycle de test',
+                            statut: obtenirStatut(actionId)
+                        });
+                    }
+                });
+
+                // Actions depuis les formations "À prévoir"
+                storage.formations.forEach((f, idx) => {
+                    if (f.statut === 'À prévoir') {
+                        const actionId = `formation_${idx}`;
+                        actions.push({
+                            id: actionId,
+                            etape: 'Préparer',
+                            action: `Formation – ${f.sujet}`,
+                            responsable: f.intervenant || 'À définir',
+                            echeance: f.date || '-',
+                            critere: `Profil : ${f.profil}`,
+                            statut: obtenirStatut(actionId)
+                        });
+                    }
+                });
+
+                // Actions depuis les prérequis "À mettre en place"
+                prerequisApp.items.forEach(item => {
+                    if (storage.prerequis[item.id] === 'À mettre en place') {
+                        const detail = storage.prerequis[item.id + '_detail'] || {};
+                        if (detail.action) {
+                            const actionId = `prerequis_${item.id}`;
+                            actions.push({
+                                id: actionId,
+                                etape: 'Préparer',
+                                action: detail.action,
+                                responsable: detail.responsable || 'À définir',
+                                echeance: detail.echeance || '-',
+                                critere: 'Prérequis',
+                                statut: obtenirStatut(actionId)
+                            });
+                        }
+                    }
+                });
+
+                return actions;
+            },
+            filtrer() {
+                this.afficher();
+            },
+            genererImprimable() {
+                const actions = this.agregateActions();
+                const context = storage.contexte;
+
+                let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Feuille de route de déploiement</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        h1 { color: #2d5016; border-bottom: 2px solid #2d5016; padding-bottom: 10px; }
+                        h2 { color: #2d5016; font-size: 16px; margin-top: 20px; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11px; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                        th { background: #f5f5f5; font-weight: bold; }
+                        .header-box { background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Feuille de route de déploiement</h1>
+                    
+                    <div class="header-box">
+                        <p><strong>Établissement :</strong> ${context.etablissement}</p>
+                        <p><strong>Pilote :</strong> ${context.pilote}</p>
+                        <p><strong>Référent :</strong> ${context.referent}</p>
+                        <p><strong>Démarrage :</strong> ${context.dateDemarrage}</p>
+                    </div>
+                    
+                    <h2>Actions à réaliser</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Étape</th>
+                                <th>Action</th>
+                                <th>Responsable</th>
+                                <th>Échéance</th>
+                                <th>Critère de validation</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${actions.map(a => `
+                                <tr>
+                                    <td>${a.etape}</td>
+                                    <td>${a.action}</td>
+                                    <td>${a.responsable}</td>
+                                    <td>${a.echeance}</td>
+                                    <td style="font-size: 10px;">${a.critere}</td>
+                                    <td>${a.statut}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    
+                    <p style="margin-top: 30px; font-size: 11px; color: #999;">Généré le ${new Date().toLocaleDateString('fr-FR')}</p>
+                    <p style="font-size: 11px; color: #999;">Utilisez Ctrl+P pour imprimer cette page.</p>
+                </body>
+                </html>
+                `;
+
+                const blob = new Blob([html], { type: 'text/html' });
+                const url = window.URL.createObjectURL(blob);
+                window.open(url);
+            },
+            exportCSV() {
+                const actions = this.agregateActions();
+                let csv = 'Étape,Action,Responsable,Échéance,Critère,Statut\n';
+                actions.forEach(a => {
+                    csv += `"${a.etape}","${a.action}","${a.responsable}","${a.echeance}","${a.critere}","${a.statut}"\n`;
+                });
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `feuille-route-${storage.contexte.etablissement.replace(/\s/g, '_')}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            }
+        };
+
+        // ============================================================
+        // SYNTHÈSE
+        // ============================================================
+        const syntheseApp = {
+            afficher() {
+                const nbPrerequisEnPlace = prerequisApp.items.filter(item => storage.prerequis[item.id] === 'En place' || storage.prerequis[item.id] === 'N/A').length;
+                const nbPrerequisRenseignes = prerequisApp.items.filter(item => storage.prerequis[item.id]).length;
+                const nbBlocsValides = Object.values(storage.blocs).filter(b => b.status === 'Validé').length;
+                const nbActionsOuvertes = feuilleRouteApp.agregateActions().filter(a => a.statut !== 'Validé').length;
+                const nbFormationsRealisees = storage.formations.filter(f => f.statut === 'Réalisé').length;
+                const nbCyclesValides = storage.testCycles.filter(c => c.conclusion === 'Validé').length;
+
+                document.getElementById('synthPrerequisValides').textContent = nbPrerequisEnPlace;
+                document.getElementById('synthBlocsValides').textContent = nbBlocsValides;
+                document.getElementById('synthActionsOuvertes').textContent = nbActionsOuvertes;
+                document.getElementById('synthFormationsRealisees').textContent = nbFormationsRealisees;
+
+                const resultatDiv = document.getElementById('synthResultat');
+                
+                // Condition stricte pour "opérationnel"
+                const tousPrerequisRenseignes = nbPrerequisRenseignes === prerequisApp.items.length;
+                const aucunPrerequisAMettre = prerequisApp.items.filter(item => storage.prerequis[item.id] === 'À mettre en place').length === 0;
+                const tousBlocsValides = nbBlocsValides === 3;
+                const aucunPointACorreger = storage.blocs.blocA.verification && storage.blocs.blocB.verification && storage.blocs.blocC.verification ?
+                    Object.values(storage.blocs.blocA.verification).filter(v => v === 'À corriger').length === 0 &&
+                    Object.values(storage.blocs.blocB.verification).filter(v => v === 'À corriger').length === 0 &&
+                    Object.values(storage.blocs.blocC.verification).filter(v => v === 'À corriger').length === 0 : false;
+                const aucunCycleEnAttente = storage.testCycles.filter(c => c.conclusion === 'Nouveau test nécessaire').length === 0;
+                const aucuneFormationAPrevoir = storage.formations.filter(f => f.statut === 'À prévoir').length === 0;
+                const aucuneActionOuverte = nbActionsOuvertes === 0;
+
+                if (tousPrerequisRenseignes && aucunPrerequisAMettre && tousBlocsValides && aucunPointACorreger && aucunCycleEnAttente && aucuneFormationAPrevoir && aucuneActionOuverte) {
+                    resultatDiv.innerHTML = '<div class="alert success"><strong>✓ Le processus peut être considéré comme opérationnel</strong></div>';
+                } else if (nbBlocsValides >= 2 && nbActionsOuvertes <= 3) {
+                    resultatDiv.innerHTML = '<div class="alert warning"><strong>⚠ Le déploiement est en phase de stabilisation</strong> — Quelques actions restent à finaliser</div>';
+                } else if (nbBlocsValides >= 1) {
+                    resultatDiv.innerHTML = '<div class="alert info"><strong>ℹ Le déploiement est en cours</strong> — Poursuivez les actions engagées et passez aux blocs suivants</div>';
+                } else {
+                    resultatDiv.innerHTML = '<div class="alert info"><strong>ℹ Déploiement en phase initiale</strong> — Commencez par les prérequis et le bloc A</div>';
+                }
+
+                document.getElementById('dateRevue').value = storage.synthese.dateRevue || '';
+                document.getElementById('observationsSynth').value = storage.synthese.observations || '';
+            },
+            sauvegarder() {
+                storage.synthese.dateRevue = document.getElementById('dateRevue').value;
+                storage.synthese.observations = document.getElementById('observationsSynth').value;
+                sauvegarderData();
+                alert('Synthèse sauvegardée');
+            }
+        };
+
+        // ============================================================
+        // PARAMÈTRES
+        // ============================================================
+        const parametresApp = {
+            reinitialiser() {
+                localStorage.removeItem('deploymentApp');
+                window.location.reload();
+            }
+        };
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const screen = e.target.dataset.screen;
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                e.target.classList.add('active');
+                document.getElementById(screen).classList.add('active');
+                
+                if (screen === 'accueil') accueilApp.afficher();
+                if (screen === 'prerequis') prerequisApp.afficher();
+                if (screen === 'deploiement') deploymentApp.afficher();
+                if (screen === 'feuille-route') feuilleRouteApp.afficher();
+                if (screen === 'synthese') syntheseApp.afficher();
+                if (screen === 'formation') formationApp.afficher();
+                if (screen === 'test') phaseTestApp.afficher();
+            });
+        });
+
+        // Initialisation au chargement
+        accueilApp.afficher();
+        prerequisApp.afficher();
+        deploymentApp.afficher();
+    </script>
+</body>
+</html>
