@@ -437,6 +437,34 @@
             display: block;
         }
 
+        .prerequis-table td.choix {
+            text-align: center;
+            width: 44px;
+        }
+
+        .prerequis-table th,
+        .prerequis-table td {
+            padding: 8px 6px;
+        }
+
+        .prerequis-table td:first-child {
+            width: 38%;
+        }
+
+        .prerequis-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .test-zone {
+            background: white;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+            padding: 12px;
+            margin-top: 16px;
+        }
+
         @media print {
             body {
                 background: white;
@@ -470,14 +498,14 @@
 <body>
     <header>
         <h1>Annexe 19 – Manuel interactif de déploiement</h1>
-        <p>Sécurisation de la facturation des ESSMS</p>
+        <p>Sécurisation du processus de facturation</p>
         <nav>
             <button class="nav-btn active" data-screen="accueil">Accueil</button>
             <button class="nav-btn" data-screen="prerequis">Prérequis</button>
             <button class="nav-btn" data-screen="deploiement">Déploiement</button>
-            <button class="nav-btn" data-screen="test">Phase test</button>
             <button class="nav-btn" data-screen="formation">Formation</button>
             <button class="nav-btn" data-screen="feuille-route">Feuille de route</button>
+            <button class="nav-btn" data-screen="historique">Historique</button>
             <button class="nav-btn" data-screen="synthese">Synthèse</button>
             <button class="nav-btn" data-screen="parametres">Paramètres</button>
         </nav>
@@ -486,102 +514,77 @@
     <div class="container">
         <!-- ACCUEIL -->
         <div class="screen active" id="accueil">
-            <h2>Cadrage et préparation du déploiement</h2>
+            <h2>Informations générales</h2>
             
             <div style="background: white; padding: 16px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #ddd;">
-                <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Cet outil accompagne l'expert-comptable et la direction de l'ESSMS dans la mise en œuvre des actions retenues à l'issue du diagnostic. Il permet d'organiser progressivement le déploiement, de vérifier les prérequis, de documenter les tests réalisés, de suivre l'appropriation par les équipes et de centraliser les actions restant à mener jusqu'à la stabilisation du dispositif.</p>
-                
-                <div style="margin-top: 16px; padding: 12px; background: #f5f5f5; border-radius: 4px; font-size: 12px;">
-                    <strong style="color: #2d5016;">Étapes de déploiement :</strong><br>
-                    <span style="display: block; margin-top: 8px;"><strong>1. Préparer</strong> — Identifier les prérequis organisationnels</span>
-                    <span style="display: block;">↓</span>
-                    <span style="display: block;"><strong>2. Standardiser</strong> — Mettre en œuvre la collecte et transmission des données</span>
-                    <span style="display: block;">↓</span>
-                    <span style="display: block;"><strong>3. Sécuriser</strong> — Intégrer les contrôles avant facturation</span>
-                    <span style="display: block;">↓</span>
-                    <span style="display: block;"><strong>4. Stabiliser</strong> — Formaliser le traitement des anomalies et la clôture</span>
-                </div>
+                <p style="font-size: 13px; color: #666; margin: 0;">Cet outil accompagne la mise en œuvre des actions retenues à l’issue du diagnostic. Il permet de vérifier les prérequis, de suivre les actions à réaliser, les tests menés et les formations prévues.</p>
             </div>
 
-            <form id="formAccueil" style="background: #fafafa; padding: 20px; border-radius: 4px; border: 1px solid #e0e0e0;">
+            <form id="formAccueil" autocomplete="off" style="background: #fafafa; padding: 20px; border-radius: 4px; border: 1px solid #e0e0e0;">
                 <div class="grid">
                     <div class="form-group">
-                        <label>Établissement</label>
+                        <label>Établissement *</label>
                         <input type="text" id="etablissement" placeholder="Nom" value="">
                     </div>
                     <div class="form-group">
-                        <label>Nombre de sites</label>
+                        <label>Nombre de sites *</label>
                         <input type="number" id="nbSites" value="1" min="1">
                     </div>
                     <div class="form-group">
-                        <label>Personne chargée du déploiement</label>
-                        <input type="text" id="pilote" placeholder="Nom et fonction">
+                        <label>Personne chargée du déploiement *</label>
+                        <input type="text" id="pilote" placeholder="Nom et prénom">
                     </div>
                     <div class="form-group">
-                        <label>Référent interne établissement</label>
-                        <input type="text" id="referent" placeholder="Nom et fonction">
+                        <label>Fonction *</label>
+                        <input type="text" id="fonction" placeholder="Ex : Expert-comptable, directeur administratif et financier">
                     </div>
                 </div>
 
                 <div class="grid">
                     <div class="form-group">
-                        <label>Date de démarrage prévisionnelle</label>
+                        <label>Date de démarrage prévisionnelle *</label>
                         <input type="date" id="dateDemarrage">
                     </div>
                     <div class="form-group">
-                        <label>Outil / logiciel actuellement utilisé</label>
+                        <label>Outil / logiciel actuellement utilisé *</label>
                         <input type="text" id="outilActuel" placeholder="Ex: Excel + courriels, logiciel métier, autre">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Organisation actuelle : décrivez brièvement</label>
+                    <label>Organisation actuelle : décrivez brièvement *</label>
                     <textarea id="organisationActuelle" placeholder="Saisie des présences / Transmission / Facturation / Validation — comment c'est fait aujourd'hui ?"></textarea>
                 </div>
 
-                <button type="button" onclick="accueilApp.demarrer()">Démarrer le cadrage du déploiement</button>
-                <button type="button" class="secondary" onclick="accueilApp.chargerExemple()" style="margin-left: 12px;">Charger un exemple</button>
+                <p style="font-size: 12px; color: #888; margin-bottom: 12px;">* Champs obligatoires pour accéder aux prérequis.</p>
+                <button type="button" onclick="accueilApp.demarrer()">Étape suivante</button>
             </form>
         </div>
 
         <!-- PRÉREQUIS -->
         <div class="screen" id="prerequis">
             <h2>Vérifier les prérequis organisationnels</h2>
-            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Avant de démarrer le déploiement, vérifiez que les éléments organisationnels de base sont en place. Pour chaque point « À mettre en place », documentez l'action à réaliser.</p>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Avant de démarrer le déploiement, vérifiez que les éléments minimums existent. Ici, « Oui » signifie uniquement que l'élément existe : cela ne signifie pas qu'il est correctement organisé ou appliqué. L'analyse du fonctionnement est réalisée dans l'onglet Déploiement.</p>
 
             <div id="checklistPrerequisContainer"></div>
 
             <div id="prerequisConclusion" style="margin-top: 20px;"></div>
 
-            <div style="margin-top: 24px; padding: 16px; background: #d4edda; border-radius: 4px; color: #155724; font-size: 13px;">
-                <strong>✓ Données sauvegardées</strong> — Toutes vos réponses sont enregistrées automatiquement.
-            </div>
+            <button type="button" onclick="prerequisApp.etapeSuivante()" style="margin-top: 16px;">Étape suivante</button>
         </div>
 
         <!-- DÉPLOIEMENT -->
         <div class="screen" id="deploiement">
-            <h2>Déployer le processus — Trois blocs successifs</h2>
-            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Chaque bloc doit être validé avant de passer au suivant. Vérifiez chaque point : Oui / À corriger / Non applicable. Les points « À corriger » alimentent automatiquement la feuille de route.</p>
+            <h2>Déployer le processus</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Pour chaque élément, indiquez Oui, À corriger ou N/A. Les éléments “À corriger” alimentent la feuille de route. Une fois les corrections mises en œuvre, renseignez le test du bloc avant de le valider.</p>
 
             <div id="deploymentContainer"></div>
-        </div>
-
-        <!-- PHASE TEST -->
-        <div class="screen" id="test">
-            <h2>Documentation des cycles de test</h2>
-            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Documentez les tests réalisés pour chaque bloc. Cela permet de tracer les ajustements et les conclusions avant validation.</p>
-
-            <div style="margin-bottom: 20px;">
-                <button type="button" onclick="phaseTestApp.ouvrirFormulaire()">+ Ajouter un cycle de test</button>
-            </div>
-
-            <div id="testCyclesContainer"></div>
         </div>
 
         <!-- FORMATION -->
         <div class="screen" id="formation">
             <h2>Formation et accompagnement des utilisateurs</h2>
-            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Documentez les formations et l'appropriation du processus par profil. Il ne s'agit pas d'un module de e-learning, mais de tracer le déploiement.</p>
+            <p style="margin-bottom: 20px; color: #666; font-size: 13px;">Cet onglet permet de suivre les formations prévues ou réalisées auprès des différents utilisateurs.</p>
 
             <div style="margin-bottom: 20px;">
                 <button type="button" onclick="formationApp.ouvrirFormulaire()">+ Ajouter une formation</button>
@@ -593,62 +596,81 @@
         <!-- FEUILLE DE ROUTE -->
         <div class="screen" id="feuille-route">
             <h2>Feuille de route de déploiement</h2>
-            <p style="margin-bottom: 16px; color: #666; font-size: 13px;">Agrégation automatique de toutes les actions saisies dans les modules précédents. Modifiez les statuts directement, filtrez et générez.</p>
+            <p style="margin-bottom: 16px; color: #666; font-size: 13px;">Actions liées aux éléments “À corriger” de l’onglet Déploiement.</p>
 
             <div class="roadmap-filter">
-                <select id="filtreEtape" onchange="feuilleRouteApp.filtrer()">
-                    <option value="">Toutes les étapes</option>
-                    <option value="Préparer">Préparer</option>
-                    <option value="Standardiser">Standardiser</option>
-                    <option value="Sécuriser">Sécuriser</option>
-                    <option value="Stabiliser">Stabiliser</option>
-                </select>
-                <select id="filtreStatut" onchange="feuilleRouteApp.filtrer()">
-                    <option value="">Tous les statuts</option>
-                    <option value="À engager">À engager</option>
-                    <option value="En cours">En cours</option>
-                    <option value="À tester">À tester</option>
-                    <option value="Validé">Validé</option>
+                <select id="filtreBloc" onchange="feuilleRouteApp.filtrer()">
+                    <option value="">Tous les blocs</option>
+                    <option value="blocA">Bloc A – Collecte et transmission</option>
+                    <option value="blocB">Bloc B – Contrôles avant facturation</option>
+                    <option value="blocC">Bloc C – Traitement des anomalies et clôture</option>
                 </select>
             </div>
 
             <div style="margin-bottom: 16px; display: flex; gap: 8px;">
-                <button type="button" onclick="feuilleRouteApp.genererImprimable()" class="secondary">Générer la feuille de route imprimable</button>
+                <button type="button" onclick="feuilleRouteApp.genererImprimable()" class="secondary">Imprimer / enregistrer en PDF</button>
                 <button type="button" onclick="feuilleRouteApp.exportCSV()" class="secondary">Exporter en CSV</button>
             </div>
 
             <div id="feuilleRouteContainer"></div>
         </div>
 
+        <!-- HISTORIQUE -->
+        <div class="screen" id="historique">
+            <h2>Historique des actions réalisées</h2>
+            <p style="margin-bottom: 16px; color: #666; font-size: 13px;">Actions réalisées, dont l’élément correspondant est repassé à « Oui » dans l’onglet Déploiement.</p>
+
+            <div style="margin-bottom: 16px; display: flex; gap: 8px;">
+                <button type="button" onclick="feuilleRouteApp.genererImprimable('historique')" class="secondary">Imprimer / enregistrer en PDF</button>
+                <button type="button" onclick="feuilleRouteApp.exportCSV('historique')" class="secondary">Exporter en CSV</button>
+            </div>
+
+            <div id="historiqueContainer"></div>
+        </div>
+
         <!-- SYNTHÈSE -->
         <div class="screen" id="synthese">
             <h2>Synthèse du déploiement</h2>
 
-            <div class="grid">
-                <div class="card">
-                    <h3>Prérequis validés</h3>
-                    <p id="synthPrerequisValides">0</p>
-                </div>
-                <div class="card">
-                    <h3>Blocs validés</h3>
-                    <p id="synthBlocsValides">0</p>
-                </div>
-                <div class="card">
-                    <h3>Actions ouvertes</h3>
-                    <p id="synthActionsOuvertes">0</p>
-                </div>
-                <div class="card">
-                    <h3>Formations réalisées</h3>
-                    <p id="synthFormationsRealisees">0</p>
-                </div>
+            <div style="margin-bottom: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" onclick="syntheseApp.imprimer()" class="secondary">Imprimer / enregistrer en PDF</button>
+                <button type="button" onclick="syntheseApp.exporterWord()" class="secondary">Exporter en Word</button>
             </div>
 
-            <div id="synthResultat" style="padding: 16px; border-radius: 4px; margin: 20px 0; font-size: 14px; font-weight: 600; text-align: center;"></div>
+            <div class="bloc-section">
+                <div class="bloc-title">État du déploiement</div>
+                <div id="synthEtat"></div>
+            </div>
+
+            <div class="bloc-section">
+                <div class="bloc-title">Actions correctives</div>
+                <div id="synthActions"></div>
+            </div>
+
+            <div class="bloc-section">
+                <div class="bloc-title">Tests des blocs</div>
+                <div id="synthTests"></div>
+            </div>
+
+            <div class="bloc-section">
+                <div class="bloc-title">Formations</div>
+                <div id="synthFormations"></div>
+            </div>
+
+            <div class="bloc-section">
+                <div class="bloc-title">Actions restant à finaliser</div>
+                <div id="synthPoints"></div>
+            </div>
+
+            <div class="bloc-section">
+                <div class="bloc-title">Conclusion</div>
+                <div id="synthTexte" style="font-size: 13px; line-height: 1.6;"></div>
+            </div>
 
             <div style="background: #fafafa; border: 1px solid #ddd; padding: 16px; border-radius: 4px; margin: 20px 0;">
                 <h3>Observations finales</h3>
                 <div class="form-group">
-                    <label>Dernier point de revue</label>
+                    <label>Date de revue finale</label>
                     <input type="date" id="dateRevue">
                 </div>
                 <div class="form-group">
@@ -675,67 +697,26 @@
         </div>
     </div>
 
-    <!-- MODAL PHASE TEST -->
-    <div class="modal" id="modalPhaseTest">
+    <!-- MODAL RÉALISATION D'UNE ACTION -->
+    <div class="modal" id="modalRealisation">
         <div class="modal-content">
-            <h2 style="margin-top: 0;">Documenter un cycle de test</h2>
-            
+            <h2 style="margin-top: 0;">Réalisation de l'action</h2>
+            <p style="font-size: 13px; color: #666; margin-bottom: 4px;"><strong>Élément :</strong> <span id="realElement"></span></p>
+            <p style="font-size: 13px; color: #666; margin-bottom: 16px;"><strong>Action prévue :</strong> <span id="realAction"></span></p>
+
             <div class="form-group">
-                <label>Bloc concerné</label>
-                <select id="testBloc">
-                    <option value="A">Bloc A – Collecte et transmission</option>
-                    <option value="B">Bloc B – Contrôles avant facturation</option>
-                    <option value="C">Bloc C – Traitement des anomalies et clôture</option>
-                </select>
+                <label>Date de réalisation *</label>
+                <input type="date" id="realDate">
             </div>
 
             <div class="form-group">
-                <label>Période testée</label>
-                <input type="month" id="testPeriode">
-            </div>
-
-            <div class="form-group">
-                <label>Sites concernés</label>
-                <input type="text" id="testSites" placeholder="Ex: Site 1, Site 2">
-            </div>
-
-            <div class="form-group">
-                <label>Difficultés rencontrées</label>
-                <textarea id="testDifficultes" placeholder="Décrivez les problèmes rencontrés"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Ajustements réalisés</label>
-                <textarea id="testAjustements" placeholder="Quelles corrections ont été apportées ?"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Conclusion</label>
-                <select id="testConclusion" onchange="phaseTestApp.afficherChampsSiNecessaire()">
-                    <option value="Nouveau test nécessaire">Nouveau test nécessaire</option>
-                    <option value="Validé">Validé</option>
-                </select>
-            </div>
-
-            <div id="testActionChamps" style="display: none; background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 16px;">
-                <p style="font-size: 12px; color: #666; margin-bottom: 12px;"><strong>Actions à mener :</strong></p>
-                <div class="form-group" style="margin-bottom: 8px;">
-                    <label>Action à réaliser</label>
-                    <input type="text" id="testAction" placeholder="Qu'est-ce qui doit être fait lors du prochain test ?">
-                </div>
-                <div class="form-group" style="margin-bottom: 8px;">
-                    <label>Responsable</label>
-                    <input type="text" id="testActionResponsable" placeholder="Qui ?">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>Échéance</label>
-                    <input type="date" id="testActionEcheance">
-                </div>
+                <label>Correction apportée *</label>
+                <textarea id="realCorrection" placeholder="Ex : Règles de saisie harmonisées et diffusées aux deux sites."></textarea>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="secondary" onclick="phaseTestApp.fermerFormulaire()">Annuler</button>
-                <button type="button" onclick="phaseTestApp.sauvegarderCycle()">Ajouter le cycle</button>
+                <button type="button" class="secondary" onclick="realisationApp.fermer()">Annuler</button>
+                <button type="button" onclick="realisationApp.valider()">Valider la réalisation</button>
             </div>
         </div>
     </div>
@@ -751,8 +732,7 @@
                     <option value="Équipes de terrain">Équipes de terrain</option>
                     <option value="Responsables de site">Responsables de site</option>
                     <option value="Service administratif / comptable">Service administratif / comptable</option>
-                    <option value="Direction">Membre de la direction</option>
-                    <option value="Personne assurant le relais">Personne assurant le relais</option>
+                    <option value="Direction">Direction</option>
                 </select>
             </div>
 
@@ -795,12 +775,13 @@
         // ============================================================
         // GESTION GLOBALE DU STOCKAGE
         // ============================================================
-        const storage = {
+        function etatInitial() {
+            return {
             contexte: {
                 etablissement: '',
                 nbSites: 1,
                 pilote: '',
-                referent: '',
+                fonction: '',
                 dateDemarrage: '',
                 outilActuel: '',
                 organisationActuelle: ''
@@ -819,7 +800,36 @@
                 dateRevue: '',
                 observations: ''
             }
-        };
+            };
+        }
+
+        const storage = etatInitial();
+
+        // ============================================================
+        // FORMATS DE DATE : lecture du texte, sans conversion susceptible de produire « Invalid Date »
+        // ============================================================
+        // AAAA-MM-JJ -> JJ/MM/AAAA (sinon le texte saisi est rendu tel quel)
+        function formatDateFr(v) {
+            const t = String(v || '').trim();
+            const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(t);
+            return m ? m[3] + '/' + m[2] + '/' + m[1] : t;
+        }
+        // Période testée : accepte AAAA-MM, MM/AAAA, M/AAAA, MM-AAAA, MM.AAAA ; renvoie AAAA-MM ou '' si illisible
+        function normaliserMois(v) {
+            const t = String(v || '').trim();
+            let m = /^(\d{4})-(\d{1,2})$/.exec(t);
+            if (m) return (parseInt(m[2], 10) >= 1 && parseInt(m[2], 10) <= 12) ? m[1] + '-' + String(parseInt(m[2], 10)).padStart(2, '0') : '';
+            m = /^(\d{1,2})\s*[\/.\-]\s*(\d{4})$/.exec(t);
+            if (m) return (parseInt(m[1], 10) >= 1 && parseInt(m[1], 10) <= 12) ? m[2] + '-' + String(parseInt(m[1], 10)).padStart(2, '0') : '';
+            return '';
+        }
+        // AAAA-MM -> MM/AAAA (sinon le texte saisi est rendu tel quel)
+        function formatMois(v) {
+            const n = normaliserMois(v);
+            return n ? n.substring(5, 7) + '/' + n.substring(0, 4) : String(v || '').trim();
+        }
+        // Le sélecteur de mois n'existe pas dans tous les navigateurs (ex. Safari sur ordinateur)
+        const moisSupporte = (() => { const i = document.createElement('input'); i.setAttribute('type', 'month'); return i.type === 'month'; })();
 
         function chargerData() {
             const saved = localStorage.getItem('deploymentApp');
@@ -839,6 +849,73 @@
         chargerData();
 
         // ============================================================
+        // COMPATIBILITÉ AVEC LES DONNÉES DÉJÀ ENREGISTRÉES
+        // Rien n'est supprimé : les anciennes données restent dans le stockage.
+        // ============================================================
+        function migrerData() {
+            if (!storage.prerequis) storage.prerequis = {};
+            // Anciens prérequis (En place / À mettre en place) -> nouveaux (Oui / Non), uniquement si le nouveau n'est pas encore renseigné
+            const correspondance = {
+                regles_facturation: 'regles_facturation',
+                echeances_mensuelles: 'echeances_connues',
+                outils_accessibles: 'outils_accessibles',
+                justificatifs: 'documents_disponibles'
+            };
+            Object.keys(correspondance).forEach(ancien => {
+                const nouveau = correspondance[ancien];
+                const v = storage.prerequis[ancien];
+                if (storage.prerequis[nouveau] === 'Oui' || storage.prerequis[nouveau] === 'Non') return;
+                if (v === 'En place') storage.prerequis[nouveau] = 'Oui';
+                else if (v === 'À mettre en place') storage.prerequis[nouveau] = 'Non';
+            });
+
+            // Statut « À tester » supprimé -> « En cours »
+            ['blocA', 'blocB', 'blocC'].forEach(id => {
+                if (!storage.blocs[id]) storage.blocs[id] = { status: 'À engager', verification: {} };
+                if (!storage.blocs[id].verification) storage.blocs[id].verification = {};
+                if (storage.blocs[id].status === 'À tester') storage.blocs[id].status = 'En cours';
+            });
+            (storage.roadmapActions || []).forEach(a => { if (a.statut === 'À tester') a.statut = 'En cours'; });
+
+            // Anciens cycles de test : le dernier cycle de chaque bloc alimente la zone de test du bloc, si elle est vide
+            const lettreVersBloc = { 'Bloc A': 'blocA', 'Bloc B': 'blocB', 'Bloc C': 'blocC' };
+            (storage.testCycles || []).forEach(c => {
+                const blocId = lettreVersBloc[(c.bloc || '').substring(0, 6)];
+                if (!blocId) return;
+                const t = storage.blocs[blocId].test;
+                if (t && (t.periode || t.date || t.resultat || t.observations)) return;
+                storage.blocs[blocId].testRepris = c;
+            });
+            ['blocA', 'blocB', 'blocC'].forEach(id => {
+                const c = storage.blocs[id].testRepris;
+                if (!c) return;
+                const obs = [c.difficultes, c.ajustements].filter(x => x).join(' – ');
+                storage.blocs[id].test = {
+                    periode: c.periode || '',
+                    date: '',
+                    resultat: c.conclusion === 'Validé' ? 'Satisfaisant' : 'Ajustements nécessaires',
+                    observations: obs
+                };
+                delete storage.blocs[id].testRepris;
+            });
+            // Une action validée manuellement (version précédente) alors que l'élément n'est pas passé à « Oui » repasse « En cours »
+            (storage.blocActions || []).forEach(a => {
+                if (a.cloturee) return;
+                const id = `blockAction_${a.blocId}_${a.pointId}` + (a.seq ? '_' + a.seq : '');
+                const r = (storage.roadmapActions || []).find(x => x.id === id);
+                if (r && r.statut === 'Validé') {
+                    // Ne concerne que les actions validées à la main dans la version 4 : leur date automatique est retirée.
+                    // Les dates de réalisation saisies dans le Déploiement sont conservées.
+                    r.statut = 'En cours';
+                    if (!r.migreV5) { delete a.dateCloture; r.migreV5 = true; }
+                }
+            });
+            sauvegarderData();
+        }
+
+        migrerData();
+
+        // ============================================================
         // ACCUEIL
         // ============================================================
         const accueilApp = {
@@ -847,31 +924,47 @@
                 document.getElementById('etablissement').value = storage.contexte.etablissement || '';
                 document.getElementById('nbSites').value = storage.contexte.nbSites || 1;
                 document.getElementById('pilote').value = storage.contexte.pilote || '';
-                document.getElementById('referent').value = storage.contexte.referent || '';
+                document.getElementById('fonction').value = storage.contexte.fonction || '';
                 document.getElementById('dateDemarrage').value = storage.contexte.dateDemarrage || '';
                 document.getElementById('outilActuel').value = storage.contexte.outilActuel || '';
                 document.getElementById('organisationActuelle').value = storage.contexte.organisationActuelle || '';
             },
-            demarrer() {
+            enregistrer() {
                 storage.contexte.etablissement = document.getElementById('etablissement').value;
-                storage.contexte.nbSites = parseInt(document.getElementById('nbSites').value);
+                storage.contexte.nbSites = parseInt(document.getElementById('nbSites').value) || '';
                 storage.contexte.pilote = document.getElementById('pilote').value;
-                storage.contexte.referent = document.getElementById('referent').value;
+                storage.contexte.fonction = document.getElementById('fonction').value;
                 storage.contexte.dateDemarrage = document.getElementById('dateDemarrage').value;
                 storage.contexte.outilActuel = document.getElementById('outilActuel').value;
                 storage.contexte.organisationActuelle = document.getElementById('organisationActuelle').value;
                 sauvegarderData();
-                document.querySelector('[data-screen="prerequis"]').click();
-                prerequisApp.afficher();
             },
-            chargerExemple() {
-                document.getElementById('etablissement').value = 'ESSMS Les Chênes';
-                document.getElementById('nbSites').value = '2';
-                document.getElementById('pilote').value = 'Marie Dupont (Expert-comptable)';
-                document.getElementById('referent').value = 'Jean Martin (Directeur)';
-                document.getElementById('dateDemarrage').value = new Date().toISOString().split('T')[0];
-                document.getElementById('outilActuel').value = 'Excel + courriels';
-                document.getElementById('organisationActuelle').value = 'Chaque site envoie ses données par courriel. L\'administrateur consolide manuellement. La facturation est préparée une fois par mois. Pas de contrôle formel avant transmission au financeur.';
+            // Vérifie les champs obligatoires de l'Accueil. Renvoie true si l'accès aux Prérequis est possible.
+            verifier() {
+                const manquants = this.champsManquants();
+                if (manquants.length > 0) {
+                    alert('Merci de compléter les champs obligatoires de l\'Accueil avant de passer aux prérequis : ' + manquants.join(', ') + '.');
+                    return false;
+                }
+                return true;
+            },
+            // Liste des champs obligatoires de l'Accueil non renseignés
+            champsManquants() {
+                if (document.getElementById('accueil').classList.contains('active')) this.enregistrer();
+                const c = storage.contexte;
+                const manquants = [];
+                if (!String(c.etablissement || '').trim()) manquants.push('établissement');
+                if (!(parseInt(c.nbSites) >= 1)) manquants.push('nombre de sites');
+                if (!String(c.pilote || '').trim()) manquants.push('personne chargée du déploiement');
+                if (!String(c.fonction || '').trim()) manquants.push('fonction');
+                if (!c.dateDemarrage) manquants.push('date de démarrage prévisionnelle');
+                if (!String(c.outilActuel || '').trim()) manquants.push('outil / logiciel actuellement utilisé');
+                if (!String(c.organisationActuelle || '').trim()) manquants.push('organisation actuelle');
+                return manquants;
+            },
+            demarrer() {
+                this.enregistrer();
+                document.querySelector('[data-screen="prerequis"]').click();
             }
         };
 
@@ -880,91 +973,89 @@
         // ============================================================
         const prerequisApp = {
             items: [
-                { id: 'regles_facturation', label: 'Les règles de facturation sont identifiées' },
-                { id: 'situations_particulieres', label: 'Les situations particulières (absences, admissions, sorties) sont définies' },
-                { id: 'saisie_presences', label: 'Les personnes chargées de saisir les présences sont identifiées' },
-                { id: 'transmission_resp', label: 'Un responsable de transmission est désigné' },
-                { id: 'preparation_facture', label: 'Une personne prépare la facture' },
-                { id: 'validation_facture', label: 'Une personne valide la facture' },
-                { id: 'echeances_mensuelles', label: 'Les échéances mensuelles sont fixées' },
-                { id: 'justificatifs', label: 'Les justificatifs sont accessibles et conservés' },
-                { id: 'relais_absence', label: 'Un relais est prévu en cas d\'absence' },
-                { id: 'outils_accessibles', label: 'Les outils utilisés sont connus et accessibles' }
+                { id: 'regles_facturation', label: 'Les règles de facturation sont disponibles' },
+                { id: 'intervenants_identifies', label: 'Les principaux intervenants du processus sont identifiés' },
+                { id: 'echeances_connues', label: 'Les échéances de facturation sont connues' },
+                { id: 'outils_accessibles', label: 'Les outils nécessaires sont accessibles' },
+                { id: 'documents_disponibles', label: 'Les documents nécessaires à la facturation sont disponibles' }
             ],
+            echapper(v) {
+                return String(v || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+            },
             afficher() {
                 const container = document.getElementById('checklistPrerequisContainer');
-                container.innerHTML = '';
-                
+                let html = '<table class="prerequis-table"><thead><tr><th>Prérequis</th><th style="text-align: center;">Oui</th><th style="text-align: center;">Non</th><th>Observations</th></tr></thead><tbody>';
+
                 this.items.forEach(item => {
                     const status = storage.prerequis[item.id] || null;
-                    const detail = storage.prerequis[item.id + '_detail'] || {};
-                    
-                    const html = `
-                        <div class="checklist-item">
-                            <h4>${item.label}</h4>
-                            <div class="checklist-buttons">
-                                <button type="button" onclick="prerequisApp.setStatus('${item.id}', 'En place')" style="background: ${status === 'En place' ? '#28a745' : '#e2e3e5'}; color: white;">
-                                    En place
-                                </button>
-                                <button type="button" onclick="prerequisApp.setStatus('${item.id}', 'À mettre en place')" style="background: ${status === 'À mettre en place' ? '#ffc107' : '#e2e3e5'}; color: ${status === 'À mettre en place' ? '#333' : '#666'};">
-                                    À mettre en place
-                                </button>
-                                <button type="button" onclick="prerequisApp.setStatus('${item.id}', 'N/A')" style="background: ${status === 'N/A' ? '#6c757d' : '#e2e3e5'}; color: white;">
-                                    N/A
-                                </button>
-                            </div>
-                            ${status ? `<div style="margin-top: 8px;"><span class="status-badge ${status === 'En place' ? 'enplace' : status === 'À mettre en place' ? 'amettre' : 'na'}">${status}</span></div>` : ''}
-                            
-                            ${status === 'À mettre en place' ? `
-                                <div class="checklist-detail visible">
-                                    <div class="form-group" style="margin-bottom: 0;">
-                                        <label style="font-size: 12px;">Action à réaliser</label>
-                                        <input type="text" value="${detail.action || ''}" onchange="prerequisApp.setDetail('${item.id}', 'action', this.value)" placeholder="Qu'est-ce qui doit être fait ?">
-                                    </div>
-                                    <div class="form-group" style="margin-top: 8px; margin-bottom: 0;">
-                                        <label style="font-size: 12px;">Responsable</label>
-                                        <input type="text" value="${detail.responsable || ''}" onchange="prerequisApp.setDetail('${item.id}', 'responsable', this.value)" placeholder="Qui ?">
-                                    </div>
-                                    <div class="form-group" style="margin-top: 8px; margin-bottom: 0;">
-                                        <label style="font-size: 12px;">Échéance</label>
-                                        <input type="date" value="${detail.echeance || ''}" onchange="prerequisApp.setDetail('${item.id}', 'echeance', this.value)">
-                                    </div>
-                                </div>
-                            ` : ''}
-                        </div>
+                    const obs = storage.prerequis[item.id + '_obs'] || '';
+                    html += `
+                        <tr>
+                            <td>${item.label}</td>
+                            <td class="choix"><input type="radio" name="pre_${item.id}" ${status === 'Oui' ? 'checked' : ''} onchange="prerequisApp.setStatus('${item.id}', 'Oui')" aria-label="Oui"></td>
+                            <td class="choix"><input type="radio" name="pre_${item.id}" ${status === 'Non' ? 'checked' : ''} onchange="prerequisApp.setStatus('${item.id}', 'Non')" aria-label="Non"></td>
+                            <td><input type="text" value="${this.echapper(obs)}" onchange="prerequisApp.setObservation('${item.id}', this.value)" placeholder="Observations"></td>
+                        </tr>
                     `;
-                    container.innerHTML += html;
                 });
 
+                html += '</tbody></table>';
+                container.innerHTML = html;
                 this.afficherConclusion();
             },
             afficherConclusion() {
                 const conclusionDiv = document.getElementById('prerequisConclusion');
-                const nbRenseignes = this.items.filter(item => storage.prerequis[item.id] !== undefined && storage.prerequis[item.id] !== null).length;
-                const nbAMettre = this.items.filter(item => storage.prerequis[item.id] === 'À mettre en place').length;
+                const nbRenseignes = this.items.filter(item => storage.prerequis[item.id] === 'Oui' || storage.prerequis[item.id] === 'Non').length;
+                const nbNon = this.items.filter(item => storage.prerequis[item.id] === 'Non').length;
                 const totalItems = this.items.length;
-                
-                if (nbRenseignes < totalItems) {
-                    conclusionDiv.innerHTML = '<div class="alert warning"><strong>⚠ Le cadrage des prérequis doit être complété.</strong></div>';
-                } else if (nbAMettre > 0) {
-                    conclusionDiv.innerHTML = `<div class="alert warning"><strong>⚠ Des points restent à traiter avant la poursuite du déploiement</strong> (${nbAMettre} point${nbAMettre > 1 ? 's' : ''})</div>`;
+
+                if (nbRenseignes < totalItems || nbNon > 0) {
+                    let messages = '';
+                    if (nbRenseignes < totalItems) messages += '<div class="alert warning"><strong>⚠ Remplissage des prérequis incomplet</strong></div>';
+                    if (nbNon > 0) messages += `<div class="alert warning"><strong>⚠ Certains prérequis doivent être réunis avant de poursuivre le déploiement</strong> (${nbNon} prérequis renseigné${nbNon > 1 ? 's' : ''} « Non »)</div>`;
+                    conclusionDiv.innerHTML = messages;
                 } else {
                     conclusionDiv.innerHTML = '<div class="alert success"><strong>✓ Prérequis suffisants pour engager le déploiement</strong></div>';
                 }
             },
             setStatus(id, status) {
                 storage.prerequis[id] = status;
-                if (status !== 'À mettre en place') {
-                    delete storage.prerequis[id + '_detail'];
-                }
                 sauvegarderData();
-                this.afficher();
+                this.afficherConclusion();
             },
-            setDetail(id, field, value) {
-                if (!storage.prerequis[id + '_detail']) {
-                    storage.prerequis[id + '_detail'] = {};
+            // Accès au Déploiement : Accueil complet, prérequis tous renseignés et aucun « Non »
+            accesDeploiement() {
+                const manquants = accueilApp.champsManquants();
+                if (manquants.length > 0) {
+                    alert('Accès au Déploiement impossible : merci de compléter d\'abord l\'Accueil (' + manquants.join(', ') + ').');
+                    return false;
                 }
-                storage.prerequis[id + '_detail'][field] = value;
+                const nbRenseignes = this.items.filter(item => storage.prerequis[item.id] === 'Oui' || storage.prerequis[item.id] === 'Non').length;
+                const nbNon = this.items.filter(item => storage.prerequis[item.id] === 'Non').length;
+                if (nbRenseignes < this.items.length || nbNon > 0) {
+                    const msgs = ['Accès au Déploiement impossible : merci de compléter d\'abord l\'onglet Prérequis.'];
+                    if (nbRenseignes < this.items.length) msgs.push('Remplissage des prérequis incomplet.');
+                    if (nbNon > 0) msgs.push('Certains prérequis doivent être réunis avant de poursuivre le déploiement.');
+                    alert(msgs.join('\n'));
+                    return false;
+                }
+                return true;
+            },
+            etapeSuivante() {
+                const nbRenseignes = this.items.filter(item => storage.prerequis[item.id] === 'Oui' || storage.prerequis[item.id] === 'Non').length;
+                const nbNon = this.items.filter(item => storage.prerequis[item.id] === 'Non').length;
+                this.afficherConclusion();
+                if (nbRenseignes < this.items.length || nbNon > 0) {
+                    const msgs = [];
+                    if (nbRenseignes < this.items.length) msgs.push('Remplissage des prérequis incomplet.');
+                    if (nbNon > 0) msgs.push('Certains prérequis doivent être réunis avant de poursuivre le déploiement.');
+                    alert(msgs.join('\n'));
+                    return;
+                }
+                document.querySelector('[data-screen="deploiement"]').click();
+            },
+            setObservation(id, value) {
+                storage.prerequis[id + '_obs'] = value;
                 sauvegarderData();
             }
         };
@@ -976,15 +1067,14 @@
             blocs: [
                 {
                     id: 'blocA',
-                    titre: 'BLOC A – Collecte et transmission des données',
+                    titre: 'BLOC A – Collecte et transmission',
                     objectif: 'Organiser une production et une transmission homogènes des données de présence.',
-                    points: [
-                        'Support commun disponible',
-                        'Règles de saisie communiquées',
-                        'Codes et situations compris par les utilisateurs',
-                        'Échéance de transmission fixée',
-                        'Responsable identifié',
-                        'Premier test effectué'
+                    elements: [
+                        { id: 'el_1', label: 'Un support commun est utilisé pour la saisie' },
+                        { id: 'el_2', label: 'Les règles de saisie sont connues des utilisateurs' },
+                        { id: 'el_3', label: 'Les situations particulières sont traitées selon une règle définie' },
+                        { id: 'el_4', label: 'Les informations sont transmises dans le délai prévu' },
+                        { id: 'el_5', label: 'La transmission est assurée selon l\'organisation définie' }
                     ],
                     critere: 'Les données nécessaires à la facturation sont produites et transmises selon les modalités prévues, sans retraitement important par le service administratif.'
                 },
@@ -992,28 +1082,27 @@
                     id: 'blocB',
                     titre: 'BLOC B – Contrôles avant facturation',
                     objectif: 'Intégrer le contrôle de concordance au cycle mensuel.',
-                    points: [
-                        'Personne chargée du contrôle désignée',
-                        'Données nécessaires disponibles',
-                        'Contrôle effectué avant émission de la facture',
-                        'Anomalie détectée pouvant être retrouvée et corrigée',
-                        'Validation prévue avant transmission au financeur'
+                    elements: [
+                        { id: 'el_1', label: 'Les informations nécessaires au contrôle sont disponibles' },
+                        { id: 'el_2', label: 'Le rapprochement est réalisé avant l\'émission de la facture' },
+                        { id: 'el_3', label: 'Les écarts détectés peuvent être retrouvés et expliqués' },
+                        { id: 'el_4', label: 'Les corrections identifiées sont prises en compte avant facturation' },
+                        { id: 'el_5', label: 'Une validation intervient avant la transmission au financeur' }
                     ],
-                    critere: 'Le contrôle peut être réalisé avant l\'émission de la facture à partir des données disponibles, sans reconstitution importante.'
+                    critere: 'Le contrôle est réalisé à partir des informations disponibles avant l\'émission de la facture.'
                 },
                 {
                     id: 'blocC',
                     titre: 'BLOC C – Traitement des anomalies et clôture',
                     objectif: 'Formaliser le traitement des anomalies et la clôture mensuelle.',
-                    points: [
-                        'Une règle de traitement est définie',
-                        'Un responsable est identifié',
-                        'La correction est tracée',
-                        'Les éléments justificatifs sont conservés',
-                        'Les anomalies récurrentes peuvent être remontées à la direction',
-                        'La clôture mensuelle est formalisée'
+                    elements: [
+                        { id: 'el_1', label: 'Les anomalies font l\'objet d\'un traitement défini' },
+                        { id: 'el_2', label: 'Les corrections réalisées sont tracées' },
+                        { id: 'el_3', label: 'Les éléments permettant de justifier une correction sont conservés' },
+                        { id: 'el_4', label: 'Les anomalies récurrentes sont remontées à la direction' },
+                        { id: 'el_5', label: 'Une revue est réalisée avant la clôture mensuelle' }
                     ],
-                    critere: 'Une anomalie détectée peut être attribuée, corrigée, documentée et clôturée selon une règle connue des personnes concernées.'
+                    critere: 'Une anomalie détectée peut être attribuée, corrigée, documentée et clôturée selon une règle définie.'
                 }
             ],
             afficher() {
@@ -1024,13 +1113,13 @@
                     const data = storage.blocs[bloc.id];
                     
                     let pointsHtml = '';
-                    bloc.points.forEach((point, idx) => {
-                        const pointId = 'point_' + idx;
+                    bloc.elements.forEach((element) => {
+                        const pointId = element.id;
                         const verification = data.verification[pointId] || null;
                         
                         pointsHtml += `
                             <div class="verify-point">
-                                <div class="verify-point-title">${point}</div>
+                                <div class="verify-point-title">${element.label}</div>
                                 <div class="verify-buttons">
                                     <button type="button" onclick="deploymentApp.setPointStatus('${bloc.id}', '${pointId}', 'En place')" style="background: ${verification === 'En place' ? '#28a745' : '#e2e3e5'}; color: white; padding: 8px; font-size: 11px;">Oui</button>
                                     <button type="button" onclick="deploymentApp.setPointStatus('${bloc.id}', '${pointId}', 'À corriger')" style="background: ${verification === 'À corriger' ? '#ffc107' : '#e2e3e5'}; color: ${verification === 'À corriger' ? '#333' : '#666'}; padding: 8px; font-size: 11px;">À corriger</button>
@@ -1039,19 +1128,19 @@
                                 ${verification === 'À corriger' ? `
                                     <div class="verify-form visible">
                                         <div class="form-group" style="margin-bottom: 8px;">
-                                            <label style="font-size: 12px;">Action à réaliser</label>
+                                            <label style="font-size: 12px;">Action à réaliser *</label>
                                             <input type="text" id="action_${bloc.id}_${pointId}" placeholder="Qu'est-ce qui doit être corrigé ?" style="font-size: 12px;" value="${deploymentApp.getActionFromStorage(bloc.id, pointId, 'action') || ''}">
                                         </div>
                                         <div class="form-group" style="margin-bottom: 8px;">
-                                            <label style="font-size: 12px;">Responsable</label>
+                                            <label style="font-size: 12px;">Responsable *</label>
                                             <input type="text" id="responsable_${bloc.id}_${pointId}" placeholder="Qui ?" style="font-size: 12px;" value="${deploymentApp.getActionFromStorage(bloc.id, pointId, 'responsable') || ''}">
                                         </div>
                                         <div class="form-group" style="margin-bottom: 8px;">
-                                            <label style="font-size: 12px;">Échéance</label>
+                                            <label style="font-size: 12px;">Échéance *</label>
                                             <input type="date" id="echeance_${bloc.id}_${pointId}" style="font-size: 12px;" value="${deploymentApp.getActionFromStorage(bloc.id, pointId, 'echeance') || ''}">
                                         </div>
                                         <div class="form-group" style="margin-bottom: 0;">
-                                            <label style="font-size: 12px;">Commentaire</label>
+                                            <label style="font-size: 12px;">Commentaire (facultatif)</label>
                                             <textarea id="comment_${bloc.id}_${pointId}" placeholder="Notes" style="font-size: 12px; min-height: 50px;">${deploymentApp.getActionFromStorage(bloc.id, pointId, 'commentaire') || ''}</textarea>
                                         </div>
                                     </div>
@@ -1061,45 +1150,69 @@
                         `;
                     });
 
-                    const nbPointsRenseignes = bloc.points.length;
-                    const nbPointsACorreger = Object.values(data.verification).filter(v => v === 'À corriger').length;
-                    const nbPointsRenseignesReellement = Object.keys(data.verification).length;
+                    const test = data.test || {};
+                    const statut = this.statutAuto(bloc.id);
+                    const couleurStatut = statut === 'Validé' ? 'enplace' : statut === 'En cours' ? 'amettre' : 'na';
 
                     const html = `
                         <div class="bloc-section">
                             <div class="bloc-title">${bloc.titre}</div>
                             <div class="bloc-objective"><strong>Objectif :</strong> ${bloc.objectif}</div>
+                            <div style="font-size: 12px; color: #888; margin: -8px 0 16px 0;">Repère de validation : ${bloc.critere}</div>
                             
                             <div style="margin-bottom: 16px;">
-                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block; font-size: 13px;">Points de vérification</label>
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block; font-size: 13px;">Éléments du bloc</label>
                                 ${pointsHtml}
                             </div>
 
                             <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 16px;">
                                 <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block; font-size: 13px;">Statut du bloc</label>
-                                <select id="status_${bloc.id}" onchange="deploymentApp.setBlocStatus('${bloc.id}', this.value)" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px;">
-                                    <option value="À engager" ${data.status === 'À engager' ? 'selected' : ''}>À engager</option>
-                                    <option value="En cours" ${data.status === 'En cours' ? 'selected' : ''}>En cours</option>
-                                    <option value="À tester" ${data.status === 'À tester' ? 'selected' : ''}>À tester</option>
-                                    <option value="Validé" ${data.status === 'Validé' ? 'selected' : ''}>Validé</option>
-                                </select>
+                                <span class="status-badge ${couleurStatut}" id="status_${bloc.id}">${statut}</span>
+                                ${statut === 'Validé' && data.dateValidation ? `<div style="font-size: 12px; color: #155724; margin-top: 6px;">Bloc validé le ${formatDateFr(data.dateValidation)}</div>` : ''}
                             </div>
 
-                            <div class="bloc-validation">
-                                <strong>Critère de validation :</strong> ${bloc.critere}
+                            <div class="test-zone">
+                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block; font-size: 13px;">Test du b${feuilleRouteApp.nomsBlocs[bloc.id].substring(1)}</label>
+                                <div class="grid" style="gap: 8px;">
+                                    <div class="form-group" style="margin-bottom: 8px;">
+                                        <label style="font-size: 12px;">Période testée</label>
+                                        ${moisSupporte
+                                            ? `<input type="month" value="${normaliserMois(test.periode)}" onchange="deploymentApp.setTest('${bloc.id}', 'periode', this.value)" style="font-size: 12px;">`
+                                            : `<input type="text" inputmode="numeric" placeholder="MM/AAAA" maxlength="7" value="${prerequisApp.echapper(formatMois(test.periode))}" onchange="deploymentApp.setTest('${bloc.id}', 'periode', this.value)" style="font-size: 12px;">`}
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 8px;">
+                                        <label style="font-size: 12px;">Date de revue</label>
+                                        <input type="date" value="${test.date || ''}" onchange="deploymentApp.setTest('${bloc.id}', 'date', this.value)" style="font-size: 12px;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 8px;">
+                                        <label style="font-size: 12px;">Conclusion</label>
+                                        <select onchange="deploymentApp.setTest('${bloc.id}', 'resultat', this.value)" style="font-size: 12px;">
+                                            <option value="" ${!test.resultat ? 'selected' : ''}>—</option>
+                                            <option value="Satisfaisant" ${test.resultat === 'Satisfaisant' ? 'selected' : ''}>Satisfaisant</option>
+                                            <option value="Ajustements nécessaires" ${test.resultat === 'Ajustements nécessaires' ? 'selected' : ''}>Ajustements nécessaires</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-size: 12px;">Observations</label>
+                                    <textarea onchange="deploymentApp.setTest('${bloc.id}', 'observations', this.value)" placeholder="Observations sur le test" style="font-size: 12px; min-height: 50px;">${prerequisApp.echapper(test.observations)}</textarea>
+                                </div>
                             </div>
 
                             <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
                                 <button type="button" onclick="deploymentApp.validerBloc('${bloc.id}')" style="background: #28a745;">Valider l'étape</button>
-                                <button type="button" class="secondary" onclick="phaseTestApp.ouvrirFormulairePour('${bloc.id}')">Maintenir en phase test</button>
                             </div>
                         </div>
                     `;
                     container.innerHTML += html;
                 });
             },
+            // Action en cours (non clôturée) d'un élément. Les actions clôturées restent dans l'historique.
+            getActionOuverte(blocId, pointId) {
+                return storage.blocActions.find(a => a.blocId === blocId && a.pointId === pointId && !a.cloturee);
+            },
             getActionFromStorage(blocId, pointId, field) {
-                const action = storage.blocActions.find(a => a.blocId === blocId && a.pointId === pointId);
+                const action = this.getActionOuverte(blocId, pointId);
                 return action ? action[field] : '';
             },
             sauvegarderAction(blocId, pointId) {
@@ -1108,190 +1221,220 @@
                 const echeance = document.getElementById(`echeance_${blocId}_${pointId}`)?.value || '';
                 const commentaire = document.getElementById(`comment_${blocId}_${pointId}`)?.value || '';
 
-                // Supprimer action existante
-                storage.blocActions = storage.blocActions.filter(a => !(a.blocId === blocId && a.pointId === pointId));
+                const existante = this.getActionOuverte(blocId, pointId);
 
-                // Ajouter nouvelle action
-                if (action) {
-                    storage.blocActions.push({
-                        blocId,
-                        pointId,
-                        action,
-                        responsable,
-                        echeance,
-                        commentaire
-                    });
+                // Formulaire entièrement vidé : l'action non réalisée est retirée, comme auparavant
+                if (existante && !action.trim() && !responsable.trim() && !echeance) {
+                    storage.blocActions = storage.blocActions.filter(a => a !== existante);
+                    sauvegarderData();
+                    alert('Action retirée');
+                    return;
                 }
 
+                const manquants = [];
+                if (!action.trim()) manquants.push('action à réaliser');
+                if (!responsable.trim()) manquants.push('responsable');
+                if (!echeance) manquants.push('échéance');
+                if (manquants.length > 0) {
+                    alert('Action non enregistrée. Merci de compléter les informations obligatoires : ' + manquants.join(', ') + '.');
+                    return;
+                }
+
+                if (existante) {
+                    Object.assign(existante, { action, responsable, echeance, commentaire });
+                } else {
+                    // Nouvelle action distincte : numérotée si l'élément a déjà des actions dans l'historique
+                    const nbPrecedentes = storage.blocActions.filter(a => a.blocId === blocId && a.pointId === pointId).length;
+                    const nouvelle = { blocId, pointId, action, responsable, echeance, commentaire };
+                    if (nbPrecedentes > 0) nouvelle.seq = nbPrecedentes + 1;
+                    storage.blocActions.push(nouvelle);
+                }
+
+                this.majStatut(blocId);
                 sauvegarderData();
                 alert('Action sauvegardée');
+            },
+            aujourdhui() {
+                const d = new Date();
+                return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
             },
             setPointStatus(blocId, pointId, status) {
                 if (!storage.blocs[blocId].verification) {
                     storage.blocs[blocId].verification = {};
                 }
-                storage.blocs[blocId].verification[pointId] = status;
-                
-                // Si le point passe à "En place" ou "N/A", supprimer l'action
-                if (status === 'En place' || status === 'N/A') {
-                    storage.blocActions = storage.blocActions.filter(a => !(a.blocId === blocId && a.pointId === pointId));
+                const precedent = storage.blocs[blocId].verification[pointId];
+                let ouverte = this.getActionOuverte(blocId, pointId);
+
+                if (status === 'En place' && precedent === 'À corriger') {
+                    // Action saisie dans le formulaire mais pas encore sauvegardée
+                    if (!ouverte) {
+                        const v = (id) => (document.getElementById(`${id}_${blocId}_${pointId}`)?.value || '').trim();
+                        if (v('action') || v('responsable') || v('echeance')) {
+                            if (!(v('action') && v('responsable') && v('echeance'))) {
+                                alert('Merci de compléter et sauvegarder l\'action en cours (action à réaliser, responsable, échéance) avant de passer cet élément à « Oui ».');
+                                return;
+                            }
+                            this.sauvegarderActionSilencieuse(blocId, pointId);
+                            ouverte = this.getActionOuverte(blocId, pointId);
+                        }
+                    }
+                    if (ouverte) {
+                        // La fenêtre « Réalisation de l'action » doit être complétée avant le passage à « Oui »
+                        realisationApp.ouvrir(blocId, pointId);
+                        return;
+                    }
                 }
-                
+
+                if (ouverte && status === 'N/A' && precedent === 'À corriger') {
+                    if (ouverte.dateCloture) {
+                        // Action déjà datée (version précédente) : conservée dans l'historique
+                        ouverte.cloturee = true;
+                    } else {
+                        // Action non réalisée devenue sans objet (comportement inchangé)
+                        storage.blocActions = storage.blocActions.filter(a => a !== ouverte);
+                    }
+                }
+
+                storage.blocs[blocId].verification[pointId] = status;
+                if (status === 'À corriger' && storage.blocs[blocId].status === 'Validé') {
+                    // Un bloc validé qui présente de nouveau un élément à corriger n'est plus validé
+                    storage.blocs[blocId].status = 'En cours';
+                    delete storage.blocs[blocId].dateValidation;
+                }
+                this.majStatut(blocId);
                 sauvegarderData();
                 this.afficher();
             },
-            setBlocStatus(blocId, status) {
-                storage.blocs[blocId].status = status;
+            sauvegarderActionSilencieuse(blocId, pointId) {
+                const v = (id) => document.getElementById(`${id}_${blocId}_${pointId}`)?.value || '';
+                const nbPrecedentes = storage.blocActions.filter(a => a.blocId === blocId && a.pointId === pointId).length;
+                const nouvelle = { blocId, pointId, action: v('action'), responsable: v('responsable'), echeance: v('echeance'), commentaire: v('comment') };
+                if (nbPrecedentes > 0) nouvelle.seq = nbPrecedentes + 1;
+                storage.blocActions.push(nouvelle);
+            },
+            // Confirmation de la fenêtre « Réalisation de l'action »
+            confirmerRealisation(blocId, pointId, dateRealisation, correction) {
+                const ouverte = this.getActionOuverte(blocId, pointId);
+                if (ouverte) {
+                    ouverte.dateCloture = dateRealisation;
+                    ouverte.correction = correction;
+                    ouverte.cloturee = true;
+                }
+                storage.blocs[blocId].verification[pointId] = 'En place';
+                this.majStatut(blocId);
                 sauvegarderData();
+                this.afficher();
+            },
+            // Statut du bloc calculé automatiquement
+            statutAuto(blocId) {
+                const data = storage.blocs[blocId];
+                if (data.status === 'Validé') return 'Validé';
+                const bloc = this.blocs.find(b => b.id === blocId);
+                const elementRenseigne = bloc.elements.some(e => data.verification[e.id]);
+                const actionSaisie = storage.blocActions.some(a => a.blocId === blocId);
+                const t = data.test || {};
+                const testCommence = !!(t.periode || t.date || t.resultat || t.observations);
+                return (elementRenseigne || actionSaisie || testCommence) ? 'En cours' : 'À engager';
+            },
+            majStatut(blocId) {
+                storage.blocs[blocId].status = this.statutAuto(blocId);
+            },
+            setTest(blocId, field, value) {
+                if (field === 'periode' && value) {
+                    const n = normaliserMois(value);
+                    if (!n) {
+                        alert('Période testée : merci de saisir le mois au format MM/AAAA (exemple : 10/2026).');
+                        this.afficher();
+                        return;
+                    }
+                    value = n;
+                }
+                if (!storage.blocs[blocId].test) storage.blocs[blocId].test = {};
+                storage.blocs[blocId].test[field] = value;
+                const avant = storage.blocs[blocId].status;
+                this.majStatut(blocId);
+                sauvegarderData();
+                if (avant !== storage.blocs[blocId].status || field === 'periode') this.afficher();
             },
             validerBloc(blocId) {
                 const bloc = storage.blocs[blocId];
-                const pointsNonRenseignes = this.blocs.find(b => b.id === blocId).points.length - Object.keys(bloc.verification).length;
-                const pointsACorreger = Object.values(bloc.verification).filter(v => v === 'À corriger').length;
+                const elements = this.blocs.find(b => b.id === blocId).elements;
+                const pointsNonRenseignes = elements.filter(e => !bloc.verification[e.id]).length;
+                const pointsACorreger = elements.filter(e => bloc.verification[e.id] === 'À corriger').length;
                 
                 if (pointsNonRenseignes > 0) {
-                    alert(`${pointsNonRenseignes} point(s) n\'ont pas été renseignés. Veuillez compléter la vérification avant de valider.`);
+                    alert(`${pointsNonRenseignes} élément(s) n\'ont pas été renseignés. Veuillez compléter le bloc avant de le valider.`);
                     return;
                 }
 
                 if (pointsACorreger > 0) {
-                    alert(`${pointsACorreger} point(s) restent à corriger. Veuillez utiliser le bouton "Maintenir en phase test" pour continuer les ajustements.`);
+                    alert(`${pointsACorreger} élément(s) restent à corriger. Le bloc pourra être validé une fois les corrections réalisées.`);
+                    return;
+                }
+
+                const idsElements = elements.map(e => e.id);
+                const sansDate = storage.blocActions.filter(a => a.blocId === blocId && idsElements.indexOf(a.pointId) > -1 && !a.dateCloture).length;
+                if (sansDate > 0) {
+                    alert(`${sansDate} action(s) corrective(s) de ce bloc n\'ont pas de date de réalisation. Merci de la renseigner avant de valider le bloc.`);
+                    return;
+                }
+
+                const test = bloc.test || {};
+                if (!test.periode || !test.date || !test.resultat) {
+                    alert('Le test du bloc doit être renseigné (période testée, date de revue et conclusion) avant de valider le bloc.');
+                    return;
+                }
+                if (test.resultat !== 'Satisfaisant') {
+                    alert('La conclusion du test est « Ajustements nécessaires » : le bloc ne peut pas être validé tant que la conclusion n\'est pas « Satisfaisant ».');
                     return;
                 }
 
                 bloc.status = 'Validé';
+                bloc.dateValidation = this.aujourdhui();
                 sauvegarderData();
                 this.afficher();
-                alert('Bloc validé');
+                alert('Bloc validé le ' + formatDateFr(bloc.dateValidation));
             }
         };
 
         // ============================================================
-        // PHASE TEST
+        // FENÊTRE « RÉALISATION DE L'ACTION »
         // ============================================================
-        const phaseTestApp = {
-            currentBlocId: null,
-            afficher() {
-                const container = document.getElementById('testCyclesContainer');
-                if (storage.testCycles.length === 0) {
-                    container.innerHTML = '<div class="alert info">Aucun cycle de test documenté pour le moment.</div>';
+        const realisationApp = {
+            blocId: null,
+            pointId: null,
+            ouvrir(blocId, pointId) {
+                const action = deploymentApp.getActionOuverte(blocId, pointId);
+                this.blocId = blocId;
+                this.pointId = pointId;
+                document.getElementById('realElement').textContent = feuilleRouteApp.libelleElement(blocId, pointId);
+                document.getElementById('realAction').textContent = action ? action.action : '';
+                document.getElementById('realDate').value = (action && action.dateCloture) || '';
+                document.getElementById('realCorrection').value = (action && action.correction) || '';
+                document.getElementById('modalRealisation').classList.add('active');
+            },
+            fermer() {
+                document.getElementById('modalRealisation').classList.remove('active');
+                this.blocId = null;
+                this.pointId = null;
+            },
+            valider() {
+                const date = document.getElementById('realDate').value;
+                const correction = document.getElementById('realCorrection').value.trim();
+                const manquants = [];
+                if (!date) manquants.push('date de réalisation');
+                if (!correction) manquants.push('correction apportée');
+                if (manquants.length > 0) {
+                    alert('Merci de renseigner : ' + manquants.join(' et ') + '.');
                     return;
                 }
-                container.innerHTML = '';
-                storage.testCycles.forEach((cycle, idx) => {
-                    const html = `
-                        <div class="bloc-section">
-                            <div class="bloc-title">Cycle ${idx + 1} — ${cycle.bloc || 'Non spécifié'}</div>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                                <div>
-                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Période</label>
-                                    <p style="font-size: 13px;">${cycle.periode || '-'}</p>
-                                </div>
-                                <div>
-                                    <label style="font-size: 12px; color: #666; font-weight: 600;">Sites</label>
-                                    <p style="font-size: 13px;">${cycle.sites || '-'}</p>
-                                </div>
-                            </div>
-                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
-                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Difficultés</label>
-                                <p style="margin: 0; color: #666;">${cycle.difficultes || '-'}</p>
-                            </div>
-                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
-                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Ajustements</label>
-                                <p style="margin: 0; color: #666;">${cycle.ajustements || '-'}</p>
-                            </div>
-                            <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
-                                <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Conclusion</label>
-                                <span class="status-badge ${cycle.conclusion === 'Validé' ? 'enplace' : 'amettre'}">${cycle.conclusion}</span>
-                            </div>
-                            ${cycle.conclusion === 'Nouveau test nécessaire' && cycle.action ? `
-                                <div style="background: white; padding: 12px; border-radius: 4px; margin-bottom: 12px; font-size: 13px;">
-                                    <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Action prévue</label>
-                                    <p style="margin: 0; color: #666;">${cycle.action}</p>
-                                </div>
-                            ` : ''}
-                            <button type="button" class="danger" onclick="phaseTestApp.supprimerCycle(${idx})" style="font-size: 12px; padding: 8px 12px;">Supprimer</button>
-                        </div>
-                    `;
-                    container.innerHTML += html;
-                });
-            },
-            ouvrirFormulaire() {
-                this.currentBlocId = null;
-                document.getElementById('testBloc').value = 'A';
-                document.getElementById('testPeriode').value = '';
-                document.getElementById('testSites').value = '';
-                document.getElementById('testDifficultes').value = '';
-                document.getElementById('testAjustements').value = '';
-                document.getElementById('testConclusion').value = 'Nouveau test nécessaire';
-                document.getElementById('testAction').value = '';
-                document.getElementById('testActionResponsable').value = '';
-                document.getElementById('testActionEcheance').value = '';
-                this.afficherChampsSiNecessaire();
-                document.getElementById('modalPhaseTest').classList.add('active');
-            },
-            ouvrirFormulairePour(blocId) {
-                this.currentBlocId = blocId;
-                const mapBlocToLetter = { blocA: 'A', blocB: 'B', blocC: 'C' };
-                document.getElementById('testBloc').value = mapBlocToLetter[blocId];
-                document.getElementById('testPeriode').value = '';
-                document.getElementById('testSites').value = '';
-                document.getElementById('testDifficultes').value = '';
-                document.getElementById('testAjustements').value = '';
-                document.getElementById('testConclusion').value = 'Nouveau test nécessaire';
-                document.getElementById('testAction').value = '';
-                document.getElementById('testActionResponsable').value = '';
-                document.getElementById('testActionEcheance').value = '';
-                this.afficherChampsSiNecessaire();
-                document.getElementById('modalPhaseTest').classList.add('active');
-            },
-            afficherChampsSiNecessaire() {
-                const conclusion = document.getElementById('testConclusion').value;
-                const champsDiv = document.getElementById('testActionChamps');
-                if (conclusion === 'Nouveau test nécessaire') {
-                    champsDiv.style.display = 'block';
-                } else {
-                    champsDiv.style.display = 'none';
+                if (date > deploymentApp.aujourdhui()) {
+                    alert('La date de réalisation ne peut pas être postérieure à la date du jour.');
+                    return;
                 }
-            },
-            sauvegarderCycle() {
-                const bloc = document.getElementById('testBloc').value;
-                const mapLetterToBloc = { 
-                    A: 'Bloc A – Collecte et transmission', 
-                    B: 'Bloc B – Contrôles avant facturation', 
-                    C: 'Bloc C – Traitement des anomalies' 
-                };
-                
-                const cycle = {
-                    bloc: mapLetterToBloc[bloc],
-                    periode: document.getElementById('testPeriode').value,
-                    sites: document.getElementById('testSites').value,
-                    difficultes: document.getElementById('testDifficultes').value,
-                    ajustements: document.getElementById('testAjustements').value,
-                    conclusion: document.getElementById('testConclusion').value
-                };
-
-                // Ajouter action si "Nouveau test nécessaire"
-                if (cycle.conclusion === 'Nouveau test nécessaire') {
-                    cycle.action = document.getElementById('testAction').value;
-                    cycle.actionResponsable = document.getElementById('testActionResponsable').value;
-                    cycle.actionEcheance = document.getElementById('testActionEcheance').value;
-                }
-
-                storage.testCycles.push(cycle);
-                sauvegarderData();
-                this.fermerFormulaire();
-                this.afficher();
-            },
-            fermerFormulaire() {
-                document.getElementById('modalPhaseTest').classList.remove('active');
-            },
-            supprimerCycle(idx) {
-                if (confirm('Supprimer ce cycle de test ?')) {
-                    storage.testCycles.splice(idx, 1);
-                    sauvegarderData();
-                    this.afficher();
-                }
+                const blocId = this.blocId, pointId = this.pointId;
+                this.fermer();
+                deploymentApp.confirmerRealisation(blocId, pointId, date, correction);
             }
         };
 
@@ -1319,7 +1462,7 @@
                                 </div>
                                 <div>
                                     <label style="font-size: 12px; color: #666; font-weight: 600;">Date</label>
-                                    <p style="font-size: 13px; margin: 0;">${f.date || '-'}</p>
+                                    <p style="font-size: 13px; margin: 0;">${f.date ? formatDateFr(f.date) : '-'}</p>
                                 </div>
                                 <div>
                                     <label style="font-size: 12px; color: #666; font-weight: 600;">Statut</label>
@@ -1378,248 +1521,161 @@
         // FEUILLE DE ROUTE
         // ============================================================
         const feuilleRouteApp = {
-            afficher() {
-                const filtreEtape = document.getElementById('filtreEtape').value;
-                const filtreStatut = document.getElementById('filtreStatut').value;
-
-                const actions = this.agregateActions();
-                
-                let filtered = actions;
-                if (filtreEtape) {
-                    filtered = filtered.filter(a => a.etape === filtreEtape);
-                }
-                if (filtreStatut) {
-                    filtered = filtered.filter(a => a.statut === filtreStatut);
-                }
-
-                const container = document.getElementById('feuilleRouteContainer');
-                
-                if (filtered.length === 0) {
-                    container.innerHTML = '<div class="alert info">Aucune action avec ces filtres.</div>';
-                    return;
-                }
-
-                let html = '<table><thead><tr><th>Étape</th><th>Action</th><th>Responsable</th><th>Échéance</th><th>Critère</th><th>Statut</th></tr></thead><tbody>';
-                
-                filtered.forEach((action) => {
-                    html += `
-                        <tr>
-                            <td>${action.etape}</td>
-                            <td>${action.action}</td>
-                            <td>${action.responsable}</td>
-                            <td>${action.echeance}</td>
-                            <td style="font-size: 11px;">${action.critere}</td>
-                            <td>
-                                <select onchange="feuilleRouteApp.changerStatut('${action.id}', this.value)" style="font-size: 11px; padding: 4px;">
-                                    <option value="À engager" ${action.statut === 'À engager' ? 'selected' : ''}>À engager</option>
-                                    <option value="En cours" ${action.statut === 'En cours' ? 'selected' : ''}>En cours</option>
-                                    <option value="À tester" ${action.statut === 'À tester' ? 'selected' : ''}>À tester</option>
-                                    <option value="Validé" ${action.statut === 'Validé' ? 'selected' : ''}>Validé</option>
-                                </select>
-                            </td>
-                        </tr>
-                    `;
-                });
-                
-                html += '</tbody></table>';
-                container.innerHTML = html;
+            nomsBlocs: {
+                blocA: 'Bloc A – Collecte et transmission',
+                blocB: 'Bloc B – Contrôles avant facturation',
+                blocC: 'Bloc C – Traitement des anomalies et clôture'
             },
-            changerStatut(actionId, nouveauStatut) {
-                const allActions = this.agregateActions();
-                const action = allActions.find(a => a.id === actionId);
-                
-                if (action) {
-                    // Chercher ou créer l'enregistrement dans storage.roadmapActions
-                    let roadmapAction = storage.roadmapActions.find(a => a.id === actionId);
-                    
-                    if (!roadmapAction) {
-                        // Créer un nouvel enregistrement pour cette action
-                        roadmapAction = {
-                            id: actionId,
-                            etape: action.etape,
-                            action: action.action,
-                            responsable: action.responsable,
-                            echeance: action.echeance,
-                            critere: action.critere,
-                            statut: nouveauStatut
-                        };
-                        storage.roadmapActions.push(roadmapAction);
-                    } else {
-                        // Mettre à jour le statut existant
-                        roadmapAction.statut = nouveauStatut;
-                    }
-                    
-                    sauvegarderData();
-                    this.afficher();
-                }
+            echapper(v) {
+                return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            },
+            // Libellé exact de l'élément du bloc concerné par l'action
+            libelleElement(blocId, pointId) {
+                const bloc = deploymentApp.blocs.find(b => b.id === blocId);
+                const el = bloc ? bloc.elements.find(e => e.id === pointId) : null;
+                return el ? el.label : 'Élément d\'une version antérieure de l\'outil';
+            },
+            colonnes: {
+                feuille: [
+                    ['Bloc', 'bloc'], ['Élément concerné', 'element'], ['Action à réaliser', 'action'],
+                    ['Responsable', 'responsable'], ['Échéance', 'echeance'], ['Observation', 'observation']
+                ],
+                historique: [
+                    ['Bloc', 'bloc'], ['Élément concerné', 'element'], ['Action prévue', 'action'], ['Correction apportée', 'correction'],
+                    ['Responsable', 'responsable'], ['Échéance', 'echeance'], ['Date de réalisation', 'dateRealisation']
+                ]
+            },
+            // Feuille de route : actions enregistrées pas encore réalisées
+            actionsAFinaliser() {
+                return this.agregateActions().filter(a => !a.realisee);
+            },
+            // Historique : actions réalisées (élément repassé à « Oui »)
+            actionsRealisees() {
+                return this.agregateActions().filter(a => a.realisee);
             },
             agregateActions() {
                 const actions = [];
-
-                // Fonction helper pour obtenir le statut mémorisé
-                const obtenirStatut = (actionId) => {
-                    const stored = storage.roadmapActions.find(a => a.id === actionId);
-                    return stored ? stored.statut : 'À engager';
-                };
-
-                // Actions depuis les blocs de déploiement
-                storage.blocActions.forEach((blockAction, idx) => {
-                    const etapes = { blocA: 'Standardiser', blocB: 'Sécuriser', blocC: 'Stabiliser' };
-                    const criteriaMap = {
-                        blocA: 'Les données nécessaires à la facturation sont produites et transmises',
-                        blocB: 'Le contrôle peut être réalisé avant l\'émission de la facture',
-                        blocC: 'Une anomalie peut être attribuée, corrigée, documentée et clôturée'
-                    };
-
-                    const actionId = `blockAction_${blockAction.blocId}_${blockAction.pointId}`;
+                storage.blocActions.forEach((blockAction) => {
+                    const complete = blockAction.action && blockAction.responsable && blockAction.echeance;
+                    if (!complete && !blockAction.cloturee) return;
                     actions.push({
-                        id: actionId,
-                        etape: etapes[blockAction.blocId],
+                        blocId: blockAction.blocId,
+                        bloc: this.nomsBlocs[blockAction.blocId] || blockAction.blocId,
+                        element: this.libelleElement(blockAction.blocId, blockAction.pointId),
                         action: blockAction.action,
-                        responsable: blockAction.responsable || 'À définir',
-                        echeance: blockAction.echeance || '-',
-                        critere: criteriaMap[blockAction.blocId],
-                        statut: obtenirStatut(actionId)
+                        correction: blockAction.correction || '',
+                        responsable: blockAction.responsable || '-',
+                        echeance: blockAction.echeance ? formatDateFr(blockAction.echeance) : '-',
+                        observation: blockAction.commentaire || '',
+                        realisee: !!blockAction.cloturee,
+                        dateRealisation: blockAction.dateCloture ? formatDateFr(blockAction.dateCloture) : ''
                     });
                 });
-
-                // Actions depuis les cycles de test "Nouveau test nécessaire"
-                storage.testCycles.forEach((cycle, idx) => {
-                    if (cycle.conclusion === 'Nouveau test nécessaire' && cycle.action) {
-                        const actionId = `testAction_${idx}`;
-                        actions.push({
-                            id: actionId,
-                            etape: 'À tester',
-                            action: cycle.action,
-                            responsable: cycle.actionResponsable || 'À définir',
-                            echeance: cycle.actionEcheance || '-',
-                            critere: 'Cycle de test',
-                            statut: obtenirStatut(actionId)
-                        });
-                    }
-                });
-
-                // Actions depuis les formations "À prévoir"
-                storage.formations.forEach((f, idx) => {
-                    if (f.statut === 'À prévoir') {
-                        const actionId = `formation_${idx}`;
-                        actions.push({
-                            id: actionId,
-                            etape: 'Préparer',
-                            action: `Formation – ${f.sujet}`,
-                            responsable: f.intervenant || 'À définir',
-                            echeance: f.date || '-',
-                            critere: `Profil : ${f.profil}`,
-                            statut: obtenirStatut(actionId)
-                        });
-                    }
-                });
-
-                // Actions depuis les prérequis "À mettre en place"
-                prerequisApp.items.forEach(item => {
-                    if (storage.prerequis[item.id] === 'À mettre en place') {
-                        const detail = storage.prerequis[item.id + '_detail'] || {};
-                        if (detail.action) {
-                            const actionId = `prerequis_${item.id}`;
-                            actions.push({
-                                id: actionId,
-                                etape: 'Préparer',
-                                action: detail.action,
-                                responsable: detail.responsable || 'À définir',
-                                echeance: detail.echeance || '-',
-                                critere: 'Prérequis',
-                                statut: obtenirStatut(actionId)
-                            });
-                        }
-                    }
-                });
-
                 return actions;
+            },
+            tableau(type, actions) {
+                const cols = this.colonnes[type];
+                let html = '<table><thead><tr>' + cols.map(c => `<th>${c[0]}</th>`).join('') + '</tr></thead><tbody>';
+                actions.forEach(a => {
+                    html += '<tr>' + cols.map(c => `<td${c[1] === 'observation' || c[1] === 'correction' ? ' style="font-size: 11px;"' : ''}>${this.echapper(a[c[1]])}</td>`).join('') + '</tr>';
+                });
+                return html + '</tbody></table>';
+            },
+            afficher() {
+                const filtreBloc = document.getElementById('filtreBloc').value;
+                let filtered = this.actionsAFinaliser();
+                if (filtreBloc) filtered = filtered.filter(a => a.blocId === filtreBloc);
+                const container = document.getElementById('feuilleRouteContainer');
+                if (filtered.length === 0) {
+                    container.innerHTML = `<div class="alert info">${filtreBloc ? 'Aucune action à finaliser pour ce bloc.' : 'Aucune action à finaliser pour le moment.'}</div>`;
+                    return;
+                }
+                container.innerHTML = this.tableau('feuille', filtered);
+            },
+            afficherHistorique() {
+                const actions = this.actionsRealisees();
+                const container = document.getElementById('historiqueContainer');
+                if (actions.length === 0) {
+                    container.innerHTML = '<div class="alert info">Aucune action réalisée pour le moment.</div>';
+                    return;
+                }
+                container.innerHTML = this.tableau('historique', actions);
             },
             filtrer() {
                 this.afficher();
             },
-            genererImprimable() {
-                const actions = this.agregateActions();
+            genererImprimable(type) {
+                const historique = type === 'historique';
+                const actions = historique ? this.actionsRealisees() : this.actionsAFinaliser();
+                const cols = this.colonnes[historique ? 'historique' : 'feuille'];
+                const titre = historique ? 'Historique des actions réalisées' : 'Feuille de route de déploiement';
                 const context = storage.contexte;
+                const e = (v) => this.echapper(v);
 
-                let html = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Feuille de route de déploiement</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h1 { color: #2d5016; border-bottom: 2px solid #2d5016; padding-bottom: 10px; }
-                        h2 { color: #2d5016; font-size: 16px; margin-top: 20px; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11px; }
-                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                        th { background: #f5f5f5; font-weight: bold; }
-                        .header-box { background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 20px; }
-                    </style>
-                </head>
-                <body>
-                    <h1>Feuille de route de déploiement</h1>
-                    
-                    <div class="header-box">
-                        <p><strong>Établissement :</strong> ${context.etablissement}</p>
-                        <p><strong>Pilote :</strong> ${context.pilote}</p>
-                        <p><strong>Référent :</strong> ${context.referent}</p>
-                        <p><strong>Démarrage :</strong> ${context.dateDemarrage}</p>
-                    </div>
-                    
-                    <h2>Actions à réaliser</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Étape</th>
-                                <th>Action</th>
-                                <th>Responsable</th>
-                                <th>Échéance</th>
-                                <th>Critère de validation</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${actions.map(a => `
-                                <tr>
-                                    <td>${a.etape}</td>
-                                    <td>${a.action}</td>
-                                    <td>${a.responsable}</td>
-                                    <td>${a.echeance}</td>
-                                    <td style="font-size: 10px;">${a.critere}</td>
-                                    <td>${a.statut}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                    
-                    <p style="margin-top: 30px; font-size: 11px; color: #999;">Généré le ${new Date().toLocaleDateString('fr-FR')}</p>
-                    <p style="font-size: 11px; color: #999;">Utilisez Ctrl+P pour imprimer cette page.</p>
-                </body>
-                </html>
-                `;
+                const html = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>${titre}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { color: #2d5016; border-bottom: 2px solid #2d5016; padding-bottom: 10px; }
+        h2 { color: #2d5016; font-size: 16px; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+        th { background: #f5f5f5; font-weight: bold; }
+        .header-box { background: #f5f5f5; padding: 12px; border-radius: 4px; margin-bottom: 20px; }
+        @media print { button { display: none; } }
+    </style>
+</head>
+<body>
+    <h1>${titre}</h1>
+    <div class="header-box">
+        <p><strong>Établissement :</strong> ${e(context.etablissement)}</p>
+        <p><strong>Personne chargée du déploiement :</strong> ${e(context.pilote)}</p>
+        <p><strong>Fonction :</strong> ${e(context.fonction)}</p>
+        <p><strong>Démarrage :</strong> ${e(formatDateFr(context.dateDemarrage))}</p>
+    </div>
+    <h2>${historique ? 'Actions réalisées' : 'Actions à finaliser'}</h2>
+    <table>
+        <thead><tr>${cols.map(c => `<th>${c[0]}</th>`).join('')}</tr></thead>
+        <tbody>
+            ${actions.length === 0 ? `<tr><td colspan="${cols.length}">Aucune action.</td></tr>` : actions.map(a => '<tr>' + cols.map(c => `<td>${e(a[c[1]])}</td>`).join('') + '</tr>').join('')}
+        </tbody>
+    </table>
+    <p style="margin-top: 30px; font-size: 11px; color: #999;">Généré le ${new Date().toLocaleDateString('fr-FR')}</p>
+    <button onclick="window.print()" style="margin-top: 12px; padding: 10px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer;">Imprimer / enregistrer en PDF</button>
+    <script>window.addEventListener('load', function() { setTimeout(function() { window.focus(); window.print(); }, 300); });<\/script>
+</body>
+</html>`;
 
-                const blob = new Blob([html], { type: 'text/html' });
-                const url = window.URL.createObjectURL(blob);
-                window.open(url);
+                const w = window.open('', historique ? 'historiqueActions' : 'feuilleRoute');
+                if (!w) {
+                    alert('Le navigateur bloque l\'ouverture du document.\nAutorisez les fenêtres surgissantes pour ce site (sur iPhone : Réglages > Safari > désactiver « Bloquer les fenêtres surgissantes »), puis cliquez à nouveau.');
+                    return;
+                }
+                w.document.open();
+                w.document.write(html);
+                w.document.close();
+                w.focus();
             },
-            exportCSV() {
-                const actions = this.agregateActions();
-                let csv = 'Étape,Action,Responsable,Échéance,Critère,Statut\n';
+            exportCSV(type) {
+                const historique = type === 'historique';
+                const actions = historique ? this.actionsRealisees() : this.actionsAFinaliser();
+                const cols = this.colonnes[historique ? 'historique' : 'feuille'];
+                const q = (v) => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+                let csv = cols.map(c => c[0]).join(',') + '\n';
                 actions.forEach(a => {
-                    csv += `"${a.etape}","${a.action}","${a.responsable}","${a.echeance}","${a.critere}","${a.statut}"\n`;
+                    csv += cols.map(c => q(a[c[1]])).join(',') + '\n';
                 });
-                
-                const blob = new Blob([csv], { type: 'text/csv' });
+                const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
                 const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `feuille-route-${storage.contexte.etablissement.replace(/\s/g, '_')}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                const lien = document.createElement('a');
+                lien.href = url;
+                lien.download = `${historique ? 'historique-actions' : 'feuille-route'}-${(storage.contexte.etablissement || 'etablissement').replace(/\s/g, '_')}.csv`;
+                document.body.appendChild(lien);
+                lien.click();
+                document.body.removeChild(lien);
                 window.URL.revokeObjectURL(url);
             }
         };
@@ -1628,42 +1684,100 @@
         // SYNTHÈSE
         // ============================================================
         const syntheseApp = {
-            afficher() {
-                const nbPrerequisEnPlace = prerequisApp.items.filter(item => storage.prerequis[item.id] === 'En place' || storage.prerequis[item.id] === 'N/A').length;
-                const nbPrerequisRenseignes = prerequisApp.items.filter(item => storage.prerequis[item.id]).length;
-                const nbBlocsValides = Object.values(storage.blocs).filter(b => b.status === 'Validé').length;
-                const nbActionsOuvertes = feuilleRouteApp.agregateActions().filter(a => a.statut !== 'Validé').length;
-                const nbFormationsRealisees = storage.formations.filter(f => f.statut === 'Réalisé').length;
-                const nbCyclesValides = storage.testCycles.filter(c => c.conclusion === 'Validé').length;
-
-                document.getElementById('synthPrerequisValides').textContent = nbPrerequisEnPlace;
-                document.getElementById('synthBlocsValides').textContent = nbBlocsValides;
-                document.getElementById('synthActionsOuvertes').textContent = nbActionsOuvertes;
-                document.getElementById('synthFormationsRealisees').textContent = nbFormationsRealisees;
-
-                const resultatDiv = document.getElementById('synthResultat');
-                
-                // Condition stricte pour "opérationnel"
-                const tousPrerequisRenseignes = nbPrerequisRenseignes === prerequisApp.items.length;
-                const aucunPrerequisAMettre = prerequisApp.items.filter(item => storage.prerequis[item.id] === 'À mettre en place').length === 0;
-                const tousBlocsValides = nbBlocsValides === 3;
-                const aucunPointACorreger = storage.blocs.blocA.verification && storage.blocs.blocB.verification && storage.blocs.blocC.verification ?
-                    Object.values(storage.blocs.blocA.verification).filter(v => v === 'À corriger').length === 0 &&
-                    Object.values(storage.blocs.blocB.verification).filter(v => v === 'À corriger').length === 0 &&
-                    Object.values(storage.blocs.blocC.verification).filter(v => v === 'À corriger').length === 0 : false;
-                const aucunCycleEnAttente = storage.testCycles.filter(c => c.conclusion === 'Nouveau test nécessaire').length === 0;
-                const aucuneFormationAPrevoir = storage.formations.filter(f => f.statut === 'À prévoir').length === 0;
-                const aucuneActionOuverte = nbActionsOuvertes === 0;
-
-                if (tousPrerequisRenseignes && aucunPrerequisAMettre && tousBlocsValides && aucunPointACorreger && aucunCycleEnAttente && aucuneFormationAPrevoir && aucuneActionOuverte) {
-                    resultatDiv.innerHTML = '<div class="alert success"><strong>✓ Le processus peut être considéré comme opérationnel</strong></div>';
-                } else if (nbBlocsValides >= 2 && nbActionsOuvertes <= 3) {
-                    resultatDiv.innerHTML = '<div class="alert warning"><strong>⚠ Le déploiement est en phase de stabilisation</strong> — Quelques actions restent à finaliser</div>';
-                } else if (nbBlocsValides >= 1) {
-                    resultatDiv.innerHTML = '<div class="alert info"><strong>ℹ Le déploiement est en cours</strong> — Poursuivez les actions engagées et passez aux blocs suivants</div>';
-                } else {
-                    resultatDiv.innerHTML = '<div class="alert info"><strong>ℹ Déploiement en phase initiale</strong> — Commencez par les prérequis et le bloc A</div>';
+            dateFr(iso) {
+                return formatDateFr(iso);
+            },
+            moisFr(ym) {
+                return formatMois(ym);
+            },
+            // Données communes à l'écran, à l'impression et à l'export Word
+            donnees() {
+                const c = storage.contexte;
+                const items = prerequisApp.items;
+                const nbReunis = items.filter(i => storage.prerequis[i.id] === 'Oui').length;
+                const blocs = deploymentApp.blocs.map(b => {
+                    const statut = deploymentApp.statutAuto(b.id);
+                    const d = storage.blocs[b.id].dateValidation;
+                    const t = storage.blocs[b.id].test || {};
+                    return {
+                        id: b.id,
+                        lettre: b.id.slice(-1),
+                        nom: feuilleRouteApp.nomsBlocs[b.id],
+                        statut: statut,
+                        etat: statut === 'Validé' ? 'Validé' + (d ? ' le ' + this.dateFr(d) : '') : statut,
+                        periode: this.moisFr(t.periode) || '—',
+                        dateTest: this.dateFr(t.date) || '—',
+                        conclusion: t.resultat || 'Non renseignée'
+                    };
+                });
+                const aFinaliser = feuilleRouteApp.actionsAFinaliser();
+                const realisees = feuilleRouteApp.actionsRealisees();
+                return {
+                    etablissement: c.etablissement || '',
+                    pilote: c.pilote || '',
+                    fonction: c.fonction || '',
+                    dateDemarrage: this.dateFr(c.dateDemarrage),
+                    prerequis: nbReunis + ' / ' + items.length,
+                    nbReunis: nbReunis,
+                    nbPrerequis: items.length,
+                    blocs: blocs,
+                    nbIdentifiees: aFinaliser.length + realisees.length,
+                    nbRealisees: realisees.length,
+                    nbAFinaliser: aFinaliser.length,
+                    aFinaliser: aFinaliser,
+                    formationsRealisees: storage.formations.filter(f => f.statut === 'Réalisé').length,
+                    formationsAPrevoir: storage.formations.filter(f => f.statut === 'À prévoir').length,
+                    conclusion: this.conclusion(blocs, aFinaliser.length, nbReunis, items.length)
+                };
+            },
+            // Conclusion courte et factuelle (3 lignes au plus)
+            conclusion(blocs, nbAFinaliser, nbReunis, nbPrerequis) {
+                const valides = blocs.filter(b => b.statut === 'Validé').length;
+                const commences = blocs.filter(b => b.statut !== 'À engager').length;
+                const lignes = [];
+                let etat;
+                if (valides === 3 && nbAFinaliser === 0) etat = 'Déploiement achevé : les trois blocs sont validés';
+                else if (valides === 3) etat = 'Déploiement non achevé : les trois blocs sont validés';
+                else if (commences === 0) etat = 'Déploiement non engagé : aucun bloc commencé';
+                else etat = `Déploiement en cours : ${valides} bloc${valides > 1 ? 's' : ''} validé${valides > 1 ? 's' : ''} sur 3`;
+                if (nbReunis < nbPrerequis) etat += ` ; prérequis réunis : ${nbReunis} sur ${nbPrerequis}`;
+                lignes.push(etat + '.');
+                if (valides < 3 && commences > 0) {
+                    const detail = blocs.map(b => 'bloc ' + b.lettre + ' ' + (b.statut === 'Validé' ? b.etat.toLowerCase() : b.statut.toLowerCase()));
+                    lignes.push(detail.join(', ').replace(/^b/, 'B') + '.');
                 }
+                lignes.push(nbAFinaliser === 0 ? 'Aucune action corrective ne reste à finaliser.' : `${nbAFinaliser} action${nbAFinaliser > 1 ? 's' : ''} corrective${nbAFinaliser > 1 ? 's' : ''} reste${nbAFinaliser > 1 ? 'nt' : ''} à finaliser.`);
+                return lignes;
+            },
+            ligne(libelle, valeur) {
+                return `<tr><td style="width: 55%;">${libelle}</td><td><strong>${valeur}</strong></td></tr>`;
+            },
+            afficher() {
+                const e = (v) => feuilleRouteApp.echapper(v);
+                const d = this.donnees();
+
+                let html = '<table>' + this.ligne('Prérequis réunis', d.prerequis);
+                d.blocs.forEach(b => { html += this.ligne(b.nom, b.etat); });
+                document.getElementById('synthEtat').innerHTML = html + '</table>';
+
+                document.getElementById('synthActions').innerHTML = '<table>' +
+                    this.ligne('Actions correctives identifiées', d.nbIdentifiees) +
+                    this.ligne('Actions correctives réalisées', d.nbRealisees) +
+                    this.ligne('Actions correctives restant à finaliser', d.nbAFinaliser) + '</table>';
+
+                document.getElementById('synthTests').innerHTML = '<table><thead><tr><th>Bloc</th><th>Période testée</th><th>Date de revue</th><th>Conclusion</th></tr></thead><tbody>' +
+                    d.blocs.map(b => `<tr><td>${b.nom}</td><td>${b.periode}</td><td>${b.dateTest}</td><td>${b.conclusion}</td></tr>`).join('') + '</tbody></table>';
+
+                document.getElementById('synthFormations').innerHTML = '<table>' +
+                    this.ligne('Formations réalisées', d.formationsRealisees) +
+                    this.ligne('Formations à prévoir', d.formationsAPrevoir) + '</table>';
+
+                document.getElementById('synthPoints').innerHTML = d.aFinaliser.length === 0
+                    ? '<p style="font-size: 13px; color: #666;">Aucune action restant à finaliser.</p>'
+                    : '<table><thead><tr><th>Bloc</th><th>Élément concerné</th><th>Action à réaliser</th><th>Responsable</th><th>Échéance</th></tr></thead><tbody>' +
+                      d.aFinaliser.map(a => `<tr><td>${e(a.bloc)}</td><td>${e(a.element)}</td><td>${e(a.action)}</td><td>${e(a.responsable)}</td><td>${e(a.echeance)}</td></tr>`).join('') + '</tbody></table>';
+
+                document.getElementById('synthTexte').innerHTML = d.conclusion.map(l => `<p style="margin-bottom: 4px;">${e(l)}</p>`).join('');
 
                 document.getElementById('dateRevue').value = storage.synthese.dateRevue || '';
                 document.getElementById('observationsSynth').value = storage.synthese.observations || '';
@@ -1673,6 +1787,217 @@
                 storage.synthese.observations = document.getElementById('observationsSynth').value;
                 sauvegarderData();
                 alert('Synthèse sauvegardée');
+            },
+            // Observations finales : reprises dans les exports uniquement si elles sont renseignées
+            observationsFinales() {
+                const s = storage.synthese || {};
+                if (!s.dateRevue && !String(s.observations || '').trim()) return null;
+                return { dateRevue: this.dateFr(s.dateRevue), observations: s.observations || '' };
+            },
+            nomFichier(ext) {
+                return 'Synthese_deploiement_' + (storage.contexte.etablissement || 'etablissement').replace(/[^A-Za-z0-9À-ÿ_-]+/g, '_') + '.' + ext;
+            },
+            imprimer() {
+                const d = this.donnees();
+                const e = (v) => feuilleRouteApp.echapper(v);
+                const obs = this.observationsFinales();
+                const tab2 = (lignes) => '<table>' + lignes.map(l => `<tr><td style="width: 55%;">${e(l[0])}</td><td><strong>${e(l[1])}</strong></td></tr>`).join('') + '</table>';
+                const html = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Synthèse du déploiement</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; color: #333; }
+        h1 { color: #2d5016; border-bottom: 2px solid #2d5016; padding-bottom: 10px; font-size: 22px; }
+        h2 { color: #2d5016; font-size: 15px; margin-top: 22px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+        th, td { border: 1px solid #ddd; padding: 7px; text-align: left; vertical-align: top; }
+        th { background: #f5f5f5; }
+        .header-box { background: #f5f5f5; padding: 12px; border-radius: 4px; font-size: 13px; }
+        .header-box p { margin: 4px 0; }
+        @media print { button { display: none; } }
+    </style>
+</head>
+<body>
+    <h1>Synthèse du déploiement</h1>
+    <div class="header-box">
+        <p><strong>Établissement :</strong> ${e(d.etablissement)}</p>
+        <p><strong>Personne chargée du déploiement :</strong> ${e(d.pilote)}</p>
+        <p><strong>Fonction :</strong> ${e(d.fonction)}</p>
+        <p><strong>Date de démarrage :</strong> ${e(d.dateDemarrage)}</p>
+    </div>
+    <h2>État du déploiement</h2>
+    ${tab2([['Prérequis réunis', d.prerequis]].concat(d.blocs.map(b => [b.nom, b.etat])))}
+    <h2>Actions correctives</h2>
+    ${tab2([['Actions correctives identifiées', d.nbIdentifiees], ['Actions correctives réalisées', d.nbRealisees], ['Actions correctives restant à finaliser', d.nbAFinaliser]])}
+    <h2>Tests des blocs</h2>
+    <table><thead><tr><th>Bloc</th><th>Période testée</th><th>Date de revue</th><th>Conclusion</th></tr></thead><tbody>
+        ${d.blocs.map(b => `<tr><td>${e(b.nom)}</td><td>${e(b.periode)}</td><td>${e(b.dateTest)}</td><td>${e(b.conclusion)}</td></tr>`).join('')}
+    </tbody></table>
+    <h2>Formations</h2>
+    ${tab2([['Formations réalisées', d.formationsRealisees], ['Formations à prévoir', d.formationsAPrevoir]])}
+    <h2>Actions restant à finaliser</h2>
+    ${d.aFinaliser.length === 0 ? '<p style="font-size: 12px;">Aucune action restant à finaliser.</p>' :
+      '<table><thead><tr><th>Bloc</th><th>Élément concerné</th><th>Action à réaliser</th><th>Responsable</th><th>Échéance</th></tr></thead><tbody>' +
+      d.aFinaliser.map(a => `<tr><td>${e(a.bloc)}</td><td>${e(a.element)}</td><td>${e(a.action)}</td><td>${e(a.responsable)}</td><td>${e(a.echeance)}</td></tr>`).join('') + '</tbody></table>'}
+    <h2>Conclusion</h2>
+    ${d.conclusion.map(l => `<p style="font-size: 13px; margin: 4px 0;">${e(l)}</p>`).join('')}
+    ${obs ? `<h2>Observations finales</h2>${obs.dateRevue ? `<p style="font-size: 12px;"><strong>Date de revue finale :</strong> ${e(obs.dateRevue)}</p>` : ''}<p style="font-size: 12px; white-space: pre-line;">${e(obs.observations)}</p>` : ''}
+    <p style="margin-top: 28px; font-size: 11px; color: #999;">Généré le ${new Date().toLocaleDateString('fr-FR')}</p>
+    <button onclick="window.print()" style="margin-top: 12px; padding: 10px 16px; background: #2d5016; color: white; border: none; border-radius: 4px; cursor: pointer;">Imprimer / enregistrer en PDF</button>
+    <script>window.addEventListener('load', function() { setTimeout(function() { window.focus(); window.print(); }, 300); });<\/script>
+</body>
+</html>`;
+                const w = window.open('', 'syntheseDeploiement');
+                if (!w) {
+                    alert('Le navigateur bloque l\'ouverture du document.\nAutorisez les fenêtres surgissantes pour ce site (sur iPhone : Réglages > Safari > désactiver « Bloquer les fenêtres surgissantes »), puis cliquez à nouveau.');
+                    return;
+                }
+                w.document.open();
+                w.document.write(html);
+                w.document.close();
+                w.focus();
+            },
+            // Export Word : véritable fichier .docx (Office Open XML), construit sans bibliothèque externe
+            exporterWord() {
+                const d = this.donnees();
+                const obs = this.observationsFinales();
+                const W = docxApp;
+                let body = '';
+                body += W.titre('Synthèse du déploiement');
+                body += W.para([['Établissement : ', true], [d.etablissement]]);
+                body += W.para([['Personne chargée du déploiement : ', true], [d.pilote]]);
+                body += W.para([['Fonction : ', true], [d.fonction]]);
+                body += W.para([['Date de démarrage : ', true], [d.dateDemarrage]]);
+                body += W.intertitre('État du déploiement');
+                body += W.tableau(null, [['Prérequis réunis', d.prerequis]].concat(d.blocs.map(b => [b.nom, b.etat])), [5800, 3800]);
+                body += W.intertitre('Actions correctives');
+                body += W.tableau(null, [['Actions correctives identifiées', d.nbIdentifiees], ['Actions correctives réalisées', d.nbRealisees], ['Actions correctives restant à finaliser', d.nbAFinaliser]], [5800, 3800]);
+                body += W.intertitre('Tests des blocs');
+                body += W.tableau(['Bloc', 'Période testée', 'Date de revue', 'Conclusion'], d.blocs.map(b => [b.nom, b.periode, b.dateTest, b.conclusion]), [3800, 1900, 1800, 2100]);
+                body += W.intertitre('Formations');
+                body += W.tableau(null, [['Formations réalisées', d.formationsRealisees], ['Formations à prévoir', d.formationsAPrevoir]], [5800, 3800]);
+                body += W.intertitre('Actions restant à finaliser');
+                body += d.aFinaliser.length === 0
+                    ? W.para([['Aucune action restant à finaliser.']])
+                    : W.tableau(['Bloc', 'Élément concerné', 'Action à réaliser', 'Responsable', 'Échéance'], d.aFinaliser.map(a => [a.bloc, a.element, a.action, a.responsable, a.echeance]), [1750, 2350, 2250, 1650, 1600]);
+                body += W.intertitre('Conclusion');
+                d.conclusion.forEach(l => { body += W.para([[l]]); });
+                if (obs) {
+                    body += W.intertitre('Observations finales');
+                    if (obs.dateRevue) body += W.para([['Date de revue finale : ', true], [obs.dateRevue]]);
+                    String(obs.observations).split('\n').forEach(l => { body += W.para([[l]]); });
+                }
+                body += W.para([['Généré le ' + new Date().toLocaleDateString('fr-FR'), false, '999999', 16]]);
+                const blob = W.construire(body);
+                const url = URL.createObjectURL(blob);
+                const lien = document.createElement('a');
+                lien.href = url;
+                lien.download = this.nomFichier('docx');
+                document.body.appendChild(lien);
+                lien.click();
+                document.body.removeChild(lien);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }
+        };
+
+        // ============================================================
+        // GÉNÉRATION D'UN FICHIER WORD (.docx) SANS BIBLIOTHÈQUE EXTERNE
+        // Un .docx est une archive ZIP contenant des fichiers XML (format Office Open XML).
+        // ============================================================
+        const docxApp = {
+            x(v) {
+                return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            },
+            // runs : [[texte, gras, couleur, taille en demi-points], ...]
+            run(texte, gras, couleur, taille) {
+                let rpr = '';
+                if (gras) rpr += '<w:b/>';
+                if (couleur) rpr += `<w:color w:val="${couleur}"/>`;
+                if (taille) rpr += `<w:sz w:val="${taille}"/><w:szCs w:val="${taille}"/>`;
+                return `<w:r>${rpr ? '<w:rPr>' + rpr + '</w:rPr>' : ''}<w:t xml:space="preserve">${this.x(texte)}</w:t></w:r>`;
+            },
+            para(runs, apres) {
+                return `<w:p><w:pPr><w:spacing w:after="${apres == null ? 80 : apres}"/></w:pPr>${runs.map(r => this.run(r[0], r[1], r[2], r[3])).join('')}</w:p>`;
+            },
+            titre(t) {
+                return `<w:p><w:pPr><w:pStyle w:val="Title"/><w:pBdr><w:bottom w:val="single" w:sz="12" w:space="4" w:color="2D5016"/></w:pBdr><w:spacing w:after="240"/></w:pPr>${this.run(t)}</w:p>`;
+            },
+            intertitre(t) {
+                return `<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr>${this.run(t)}</w:p>`;
+            },
+            cellule(texte, largeur, entete) {
+                const shd = entete ? '<w:shd w:val="clear" w:color="auto" w:fill="F5F5F5"/>' : '';
+                return `<w:tc><w:tcPr><w:tcW w:w="${largeur}" w:type="dxa"/>${shd}</w:tcPr><w:p><w:pPr><w:spacing w:after="0"/></w:pPr>${this.run(texte, entete, null, 18)}</w:p></w:tc>`;
+            },
+            tableau(entetes, lignes, largeurs) {
+                const bord = '<w:top w:val="single" w:sz="4" w:color="DDDDDD"/><w:left w:val="single" w:sz="4" w:color="DDDDDD"/><w:bottom w:val="single" w:sz="4" w:color="DDDDDD"/><w:right w:val="single" w:sz="4" w:color="DDDDDD"/><w:insideH w:val="single" w:sz="4" w:color="DDDDDD"/><w:insideV w:val="single" w:sz="4" w:color="DDDDDD"/>';
+                let t = `<w:tbl><w:tblPr><w:tblW w:w="${largeurs.reduce((a, b) => a + b, 0)}" w:type="dxa"/><w:tblBorders>${bord}</w:tblBorders><w:tblCellMar><w:top w:w="60" w:type="dxa"/><w:left w:w="100" w:type="dxa"/><w:bottom w:w="60" w:type="dxa"/><w:right w:w="100" w:type="dxa"/></w:tblCellMar></w:tblPr>`;
+                t += '<w:tblGrid>' + largeurs.map(l => `<w:gridCol w:w="${l}"/>`).join('') + '</w:tblGrid>';
+                if (entetes) t += '<w:tr><w:trPr><w:tblHeader/></w:trPr>' + entetes.map((h, i) => this.cellule(h, largeurs[i], true)).join('') + '</w:tr>';
+                lignes.forEach(l => {
+                    t += '<w:tr>' + l.map((v, i) => this.cellule(v, largeurs[i], !entetes && i === 0 ? false : false)).join('') + '</w:tr>';
+                });
+                return t + '</w:tbl>' + this.para([['']], 60);
+            },
+            fichiers(body) {
+                const ns = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"';
+                return {
+                    '[Content_Types].xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>',
+                    '_rels/.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>',
+                    'docProps/core.xml': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>Synthèse du déploiement</dc:title><dcterms:created xsi:type="dcterms:W3CDTF">' + new Date().toISOString().split('.')[0] + 'Z</dcterms:created></cp:coreProperties>',
+                    'word/_rels/document.xml.rels': '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>',
+                    'word/styles.xml': `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles ${ns}><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial" w:eastAsia="Arial"/><w:sz w:val="20"/><w:szCs w:val="20"/><w:lang w:val="fr-FR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="80" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style><w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:rPr><w:b/><w:color w:val="2D5016"/><w:sz w:val="36"/><w:szCs w:val="36"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:pPr><w:keepNext/><w:spacing w:before="280" w:after="100"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:color w:val="2D5016"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:style></w:styles>`,
+                    'word/document.xml': `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ${ns}><w:body>${body}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="567" w:footer="567" w:gutter="0"/></w:sectPr></w:body></w:document>`
+                };
+            },
+            crcTable: null,
+            crc32(bytes) {
+                if (!this.crcTable) {
+                    this.crcTable = new Uint32Array(256);
+                    for (let n = 0; n < 256; n++) {
+                        let c = n;
+                        for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+                        this.crcTable[n] = c >>> 0;
+                    }
+                }
+                let crc = 0xFFFFFFFF;
+                for (let i = 0; i < bytes.length; i++) crc = this.crcTable[(crc ^ bytes[i]) & 0xFF] ^ (crc >>> 8);
+                return (crc ^ 0xFFFFFFFF) >>> 0;
+            },
+            // Archive ZIP sans compression (méthode « stored »), lisible par Word
+            zip(fichiers) {
+                const enc = new TextEncoder();
+                const morceaux = [];
+                const central = [];
+                let decalage = 0;
+                const u16 = (v) => [v & 0xFF, (v >>> 8) & 0xFF];
+                const u32 = (v) => [v & 0xFF, (v >>> 8) & 0xFF, (v >>> 16) & 0xFF, (v >>> 24) & 0xFF];
+                const now = new Date();
+                const heure = (now.getHours() << 11) | (now.getMinutes() << 5) | Math.floor(now.getSeconds() / 2);
+                const jour = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+                Object.keys(fichiers).forEach(nom => {
+                    const nomOctets = enc.encode(nom);
+                    const donnees = enc.encode(fichiers[nom]);
+                    const crc = this.crc32(donnees);
+                    const entete = [].concat([0x50, 0x4B, 0x03, 0x04], u16(20), u16(0x0800), u16(0), u16(heure), u16(jour), u32(crc), u32(donnees.length), u32(donnees.length), u16(nomOctets.length), u16(0));
+                    morceaux.push(new Uint8Array(entete), nomOctets, donnees);
+                    central.push({ nomOctets, crc, taille: donnees.length, decalage });
+                    decalage += entete.length + nomOctets.length + donnees.length;
+                });
+                const debutCentral = decalage;
+                let tailleCentral = 0;
+                central.forEach(f => {
+                    const e = [].concat([0x50, 0x4B, 0x01, 0x02], u16(20), u16(20), u16(0x0800), u16(0), u16(heure), u16(jour), u32(f.crc), u32(f.taille), u32(f.taille), u16(f.nomOctets.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(f.decalage));
+                    morceaux.push(new Uint8Array(e), f.nomOctets);
+                    tailleCentral += e.length + f.nomOctets.length;
+                });
+                morceaux.push(new Uint8Array([].concat([0x50, 0x4B, 0x05, 0x06], u16(0), u16(0), u16(central.length), u16(central.length), u32(tailleCentral), u32(debutCentral), u16(0))));
+                return new Blob(morceaux, { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+            },
+            construire(body) {
+                return this.zip(this.fichiers(body));
             }
         };
 
@@ -1681,8 +2006,35 @@
         // ============================================================
         const parametresApp = {
             reinitialiser() {
+                // 1. Suppression des données enregistrées
                 localStorage.removeItem('deploymentApp');
-                window.location.reload();
+
+                // 2. Remise à zéro des données en mémoire (sans recharger la page,
+                //    pour éviter que le navigateur ne réaffiche les anciennes saisies)
+                Object.keys(storage).forEach(k => delete storage[k]);
+                Object.assign(storage, etatInitial());
+
+                // 3. Remise à zéro des champs affichés
+                document.getElementById('formAccueil').reset();
+                ['etablissement', 'pilote', 'fonction', 'dateDemarrage', 'outilActuel', 'organisationActuelle', 'dateRevue', 'observationsSynth'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+                document.getElementById('nbSites').value = 1;
+                document.getElementById('filtreBloc').value = '';
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+
+                // 4. Réaffichage de tous les écrans à partir de l'état initial
+                prerequisApp.afficher();
+                deploymentApp.afficher();
+                formationApp.afficher();
+                feuilleRouteApp.afficher();
+                feuilleRouteApp.afficherHistorique();
+                syntheseApp.afficher();
+
+                // 5. Retour à l'Accueil
+                document.querySelector('.nav-btn[data-screen="accueil"]').click();
+                alert('L\'outil a été réinitialisé.');
             }
         };
 
@@ -1692,6 +2044,8 @@
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.addEventListener('click', e => {
                 const screen = e.target.dataset.screen;
+                if (screen === 'prerequis' && !accueilApp.verifier()) return;
+                if (screen === 'deploiement' && !prerequisApp.accesDeploiement()) return;
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
                 e.target.classList.add('active');
@@ -1701,13 +2055,20 @@
                 if (screen === 'prerequis') prerequisApp.afficher();
                 if (screen === 'deploiement') deploymentApp.afficher();
                 if (screen === 'feuille-route') feuilleRouteApp.afficher();
+                if (screen === 'historique') feuilleRouteApp.afficherHistorique();
                 if (screen === 'synthese') syntheseApp.afficher();
                 if (screen === 'formation') formationApp.afficher();
-                if (screen === 'test') phaseTestApp.afficher();
             });
         });
 
-        // Initialisation au chargement
+        // Périodes testées déjà enregistrées : remises au format interne AAAA-MM lorsque c'est possible
+        ['blocA', 'blocB', 'blocC'].forEach(id => {
+            const t = storage.blocs[id] && storage.blocs[id].test;
+            if (t && t.periode && normaliserMois(t.periode)) t.periode = normaliserMois(t.periode);
+        });
+        // Initialisation au chargement : statuts des blocs recalculés à partir des données existantes
+        ['blocA', 'blocB', 'blocC'].forEach(id => deploymentApp.majStatut(id));
+        sauvegarderData();
         accueilApp.afficher();
         prerequisApp.afficher();
         deploymentApp.afficher();
